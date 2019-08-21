@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huyang.zhiqianquan.dao.WorkMapper">
+
+    <resultMap id="hashWork" type="com.huyang.zhiqianquan.entity.Work">
+        <id property="workId" column="work_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="workType" column="work_type" jdbcType="VARCHAR"/>
+        <result property="workImage" column="work_image" jdbcType="VARCHAR"/>
+        <result property="workCompanyName" column="work_company_name" jdbcType="VARCHAR"/>
+        <result property="workPostName" column="work_post_name" jdbcType="VARCHAR"/>
+        <result property="workPostType" column="work_post_type" jdbcType="VARCHAR"/>
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"/>
+        <result property="workEntry" column="work_entry" jdbcType="VARCHAR"/>
+        <result property="workCycle" column="work_cycle" jdbcType="VARCHAR"/>
+        <result property="workResume" column="work_resume" jdbcType="VARCHAR"/>
+        <result property="workAddress" column="work_address" jdbcType="VARCHAR"/>
+        <result property="workEmail" column="work_email" jdbcType="VARCHAR"/>
+        <result property="workDesride" column="work_desride" jdbcType="VARCHAR"/>
+        <result property="workData" column="work_data" jdbcType="TIMESTAMP"/>
+        <result property="workStatus" column="work_status" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="worksql">
+        work_id,user_id,work_type,work_image,work_company_name,work_post_name,work_post_type,work_city,
+        work_entry,work_cycle,work_resume,work_address,work_email,work_desride,work_data,work_status
+    </sql>
+    <!--增加招聘信息-->
+    <insert id="addwork" parameterType="com.huyang.zhiqianquan.entity.Work">
+        insert into work(
+        <include refid="worksql"/>
+        ) values (
+        #{workId},#{userId},#{workType},#{workImage},#{workCompanyName},#{workPostName},#{workPostType},#{workCity},#{workEntry},
+        #{workCycle},#{workResume},#{workAddress},#{workEmail},#{workDesride},#{workData},#{workStatus}
+        )
+    </insert>
+
+    <!--查询所有招聘信息，带分页-->
+    <select id="querywork" resultMap="hashWork">
+        select * from work where work_status=1
+    </select>
+
+    <!--多条件查询-->
+    <select id="queryworktype" resultMap="hashWork" parameterType="com.huyang.zhiqianquan.entity.Work">
+        select * from work
+        <where>
+            <if test="workType!=null and workType!=''">
+                work_type=#{workType}
+            </if>
+            <if test="workPostType!=null and workPostType!=''">
+                and work_post_type=#{workPostType}
+            </if>
+            <if test="workCity!=null and workCity!=''">
+                and work_city=#{workCity}
+            </if>
+            <if test="workCompanyName!=null and workCompanyName!=''">
+                <bind name="company" value="'%'+_parameter.workCompanyName+'%'"></bind>
+                and work_company_name like #{company}
+            </if>
+            and work_status=1
+        </where>
+    </select>
+
+
+    <sql id="collectionsql">
+        collection_id,user_id,work_id,chatroom_id,collection_data,collection_status
+    </sql>
+    <!--收藏招聘信息-->
+    <insert id="addcollection" parameterType="com.huyang.zhiqianquan.entity.Collection">
+        insert into collection(
+        <include refid="collectionsql"/>
+        ) values (
+        #{collectionId},#{userId},#{workId},#{chatroomId},#{collectionData},#{collectionStatus}
+
+        )
+    </insert>
+
+    <resultMap id="collection" type="com.huyang.zhiqianquan.entity.Collection">
+        <id property="collectionId" column="collection_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="workId" column="work_id" jdbcType="VARCHAR"/>
+        <result property="chatroomId" column="chatroom_id" jdbcType="VARCHAR"/>
+        <result property="collectionData" column="collection_data" jdbcType="TIMESTAMP"/>
+        <result property="collectionStatus" column="collection_status" jdbcType="VARCHAR"/>
+        <association property="work" javaType="com.huyang.zhiqianquan.entity.Work">
+            <id property="workId" column="work_id" jdbcType="VARCHAR"/>
+            <result property="workType" column="work_type" jdbcType="VARCHAR"/>
+            <result property="workImage" column="work_image" jdbcType="VARCHAR"/>
+            <result property="workPostName" column="work_post_name" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+    <!--根据用户ID查询招聘收藏详情-->
+    <select id="querycollectionById" resultMap="collection">
+      select collection.*,work.work_id,work.work_type,work.work_image,work.work_post_name from collection left join work on collection.work_id=work.work_id  where collection.user_id=#{userId}
+    </select>
+
+
+    <!--根据workId查询work详情，或者根据用户ID查询用户已发布的招聘信息-->
+    <select id="workById" resultMap="hashWork">
+        select * from work
+        <where>
+            <if test="workid!=null and workid!=''">
+                work_id=#{workid}
+            </if>
+            <if test="userid!=null and userid!=''">
+                and user_id=#{userid}
+            </if>
+        </where>
+    </select>
+
+    <!--修改已发招聘信息-->
+    <update id="modifywork" parameterType="com.huyang.zhiqianquan.entity.Work">
+        update work
+        <set>
+            user_id=#{userId}
+            <if test="workType!=null and workType!=''">
+                ,work_type=#{workType}
+            </if>
+            <if test="workImage!=null and workImage!=''">
+                ,work_image=#{workImage}
+            </if>
+            <if test="workCompanyName!=null and workCompanyName!=''">
+                ,work_company_name=#{workCompanyName}
+            </if>
+            <if test="workPostName!=null and workPostName!=''">
+                ,work_post_name=#{workPostName}
+            </if>
+            <if test="workPostType!=null and workPostType!=''">
+                ,work_post_type=#{workPostType}
+            </if>
+            <if test="workCity!=null and workCity!=''">
+                ,work_city=#{workCity}
+            </if>
+            <if test="workEntry!=null and workEntry!=''">
+                ,work_entry=#{workEntry}
+            </if>
+            <if test="workCycle!=null and workCycle!=''">
+                ,work_cycle=#{workCycle}
+            </if>
+            <if test="workResume!=null and workResume!=''">
+                ,work_resume=#{workResume}
+            </if>
+            <if test="workAddress!=null and workAddress!=''">
+                ,work_address=#{workAddress}
+            </if>
+            <if test="workEmail!=null and workEmail!=''">
+                ,work_email=#{workEmail}
+            </if>
+            <if test="workDesride!=null and workDesride!=''">
+                ,work_desride=#{workDesride}
+            </if>
+
+                ,work_data=#{workData}
+
+        </set>
+        where work_id=#{workId}
+    </update>
+    <delete id="deletework" >
+        delete from work where work_id=#{workid}
+    </delete>
+    <delete id="deletecollectionwork" >
+        delete from collection where work_id=#{workid}
+    </delete>
+</mapper>

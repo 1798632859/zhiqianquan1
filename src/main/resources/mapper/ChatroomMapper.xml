@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huyang.zhiqianquan.dao.ChatroomDao">
+
+    <resultMap id="hashchatroom" type="com.huyang.zhiqianquan.entity.Chatroom">
+        <id property="chatroomId" column="chatroom_id"/>
+        <result property="userId" column="user_id" ></result>
+        <result property="chatroomLikenum" column="chatroom_likenum" ></result>
+        <result property="chatroomReview" column="chatroom_review"></result>
+        <result property="chatroomType" column="chatroom_type" ></result>
+        <result property="chatroomComment" column="chatroom_comment" ></result>
+        <result property="chatroomImage" column="chatroom_image" ></result>
+        <result property="chatroomStatus" column="chatroom_status" ></result>
+        <result property="chatroomData" column="chatroom_data" ></result>
+
+        <result property="userName" column="user_name"></result>
+        <result property="userImage" column="user_image"></result>
+        <result property="userSchool" column="user_school"></result>
+        <result property="userCompany" column="user_company"></result>
+        <result property="userPost" column="user_post"></result>
+    </resultMap>
+
+    <!--查询所有消息-->
+    <select id="selectchatroomall" resultMap="hashchatroom">
+        SELECT
+            a.*,
+            b.user_name,
+            b.user_image,
+            b.user_school,
+            b.user_company,
+            b.user_post
+        FROM
+            chatroom a
+            LEFT JOIN USER b ON a.user_id = b.user_id
+        WHERE
+            chatroom_status =1
+    </select>
+
+    <!--根据用户ID 查询所有消息-->
+    <select id="selectchatroomallbyId" resultMap="hashchatroom">
+        SELECT
+            a.*,
+            b.user_name,
+            b.user_image,
+            b.user_school,
+            b.user_company,
+            b.user_post
+        FROM
+            chatroom a
+            LEFT JOIN USER b ON a.user_id = b.user_id
+        WHERE
+            chatroom_status =1 and b.user_id=#{userId}
+    </select>
+
+
+    <sql id="sqlchatroom">
+        chatroom_id,user_id,chatroom_likenum,chatroom_type,chatroom_comment,chatroom_status,chatroom_data,chatroom_image
+    </sql>
+
+
+    <!--添加消息-->
+    <insert id="addchatroom">
+        insert into chatroom(<include refid="sqlchatroom"/>) values (#{chatroomId},#{userId},#{chatroomLikenum},#{chatroomType},#{chatroomComment},#{chatroomStatus},#{chatroomData},#{chatroomImage})
+    </insert>
+
+    <!--删除消息-->
+    <update id="delchatroombyId">
+        update chatroom set chatroom_status=0 where chatroom_id=#{chatroomId} ;
+    </update>
+
+    <!--根据消息ID查询消息详情-->
+    <select id="selectchatroombyId" resultMap="hashchatroom">
+        SELECT
+            a.*,
+            b.user_name,
+            b.user_image,
+            b.user_school,
+            b.user_company,
+            b.user_post
+        FROM
+            chatroom a
+            LEFT JOIN USER b ON a.user_id = b.user_id
+        WHERE
+            chatroom_status = 1
+            AND a.chatroom_id =#{chatroomId}
+
+    </select>
+
+    <!--查看当前 赞的数量-->
+    <select id="selectchatlikenumbyId" resultType="long">
+        select chatroom_likenum  from chatroom where chatroom_id=#{chatroomId}
+    </select>
+
+    <!--点赞-->
+    <update id="updatechatroomlikenums">
+        update chatroom set chatroom_likenum=chatroom_likenum+1  where chatroom_id=#{chatroomId};
+    </update>
+
+    <!--取消赞-->
+    <update id="updatedownlikenum">
+        update chatroom set chatroom_likenum=chatroom_likenum-1  where chatroom_id=#{chatroomId};
+    </update>
+
+
+    <sql id="collectionchatroom">
+        collection_id,user_id,chatroom_id,collection_data,collection_status
+    </sql>
+
+    <!--收藏此消息-->
+    <insert id="addcollectionbychatroomId">
+        insert into collection(<include refid="collectionchatroom"/>) values (#{collectionId},#{userId},#{chatroomId},#{collectionData},#{collectionStatus})
+    </insert>
+
+
+    <resultMap id="dismap" type="com.huyang.zhiqianquan.entity.Discuss">
+        <id property="discussId" column="discuss_id"></id>
+        <result property="userId" column="user_id"></result>
+        <result property="chatroomId" column="chatroom_id"></result>
+        <result property="discussFather" column="discuss_father"></result>
+        <result property="discussSon" column="discuss_son"></result>
+        <result property="discussComment" column="discuss_comment"></result>
+        <result property="discussData" column="discuss_data"></result>
+        <result property="discussStatus" column="discuss_status"></result>
+        <collection property="list" ofType="com.huyang.zhiqianquan.entity.Discuss">
+            <id property="discussId" column="son_discuss_id"></id>
+            <result property="userId" column="son_user_id"></result>
+            <result property="chatroomId" column="son_chatroom_id"></result>
+            <result property="discussFather" column="son_discuss_father"></result>
+            <result property="discussSon" column="son_discuss_son"></result>
+            <result property="discussComment" column="son_discuss_comment"></result>
+            <result property="discussData" column="son_discuss_data"></result>
+            <result property="discussStatus" column="son_discuss_status"></result>
+        </collection>
+    </resultMap>
+
+    <resultMap id="discussmap" type="com.huyang.zhiqianquan.entity.Discuss">
+        <id property="discussId" column="discuss_id"></id>
+        <result property="userId" column="user_id"></result>
+        <result property="touserId" column="touser_id"></result>
+        <result property="chatroomId" column="chatroom_id"></result>
+        <result property="discussFather" column="discuss_father"></result>
+        <result property="discussSon" column="discuss_son"></result>
+        <result property="discussComment" column="discuss_comment"></result>
+        <result property="discussData" column="discuss_data"></result>
+        <result property="discussStatus" column="discuss_status"></result>
+    </resultMap>
+
+
+
+    <!--根据消息ID 查询的一级评论-->
+    <select id="selectdiscussbyId" resultMap="discussmap">
+	  SELECT
+        f.discuss_id,
+		f.user_id,
+        f.touser_id,
+		f.chatroom_id,
+		f.discuss_father,
+		f.discuss_son,
+		f.discuss_comment,
+		f.discuss_data,
+		f.discuss_status
+    FROM
+        discuss f
+    WHERE
+        f.chatroom_id=#{chatroomId}
+        and f.discuss_father is null
+        and f.discuss_status=1
+    </select>
+
+    <!--根据消息Id  查询二级评论-->
+    <select id="selectsondiscussbyId" resultMap="discussmap">
+       	  SELECT
+        f.discuss_id,
+		f.user_id,
+		f.touser_id,
+		f.chatroom_id,
+		f.discuss_father,
+		f.discuss_son,
+		f.discuss_comment,
+		f.discuss_data,
+		f.discuss_status
+    FROM
+        discuss f
+    WHERE
+        f.chatroom_id=#{chatroomId}
+        and f.discuss_father is not null
+        and f.discuss_status=1
+    </select>
+
+    <sql id="addiscuss">
+        discuss_id,user_id,touser_id,chatroom_id,discuss_comment,discuss_data,discuss_status
+    </sql>
+    <!--发送 一级评论-->
+    <insert id="adddoneiscuss">
+        insert into discuss(<include refid="addiscuss"/>) values (#{discussId},#{userId},#{touserId},#{chatroomId},#{discussComment},#{discussData},#{discussStatus})
+    </insert>
+
+</mapper>

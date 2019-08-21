@@ -20,6 +20,16 @@ public class Tenancy implements Serializable {
   private java.sql.Timestamp tenancyFounddata;
   private String tenancyStatus;
 
+    public long getTenancyFabulous() {
+        return tenancyFabulous;
+    }
+
+    public void setTenancyFabulous(long tenancyFabulous) {
+        this.tenancyFabulous = tenancyFabulous;
+    }
+
+    private long tenancyFabulous;
+
 
   public String getTenancyId() {
     return tenancyId;

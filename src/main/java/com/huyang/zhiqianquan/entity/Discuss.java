@@ -2,17 +2,32 @@ package com.huyang.zhiqianquan.entity;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Discuss implements Serializable {
 
   private String discussId;
   private String userId;
+  private String touserId;
   private String chatroomId;
   private String discussFather;
   private String discussSon;
+  private String discussComment;
   private java.sql.Timestamp discussData;
   private String discussStatus;
+  private List<Discuss> list;
 
+
+
+
+
+    public String getDiscussComment() {
+        return discussComment;
+    }
+
+    public void setDiscussComment(String discussComment) {
+        this.discussComment = discussComment;
+    }
 
   public String getDiscussId() {
     return discussId;
@@ -75,5 +90,22 @@ public class Discuss implements Serializable {
   public void setDiscussStatus(String discussStatus) {
     this.discussStatus = discussStatus;
   }
+
+    public List<Discuss> getList() {
+        return list;
+    }
+
+    public void setList(List<Discuss> list) {
+        this.list = list;
+    }
+
+    public String getTouserId() {
+        return touserId;
+    }
+
+    public void setTouserId(String touserId) {
+        this.touserId = touserId;
+    }
+
 
 }

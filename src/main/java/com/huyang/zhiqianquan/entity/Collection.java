@@ -7,8 +7,45 @@ public class Collection implements Serializable {
 
   private String collectionId;
   private String userId;
+  private String workId;
+  private String houseId;
+  private String tenancyId;
   private String chatroomId;
   private java.sql.Timestamp collectionData;
+  private Work work;
+
+  public Work getWork() {
+    return work;
+  }
+
+  public void setWork(Work work) {
+    this.work = work;
+  }
+
+  public String getWorkId() {
+    return workId;
+  }
+
+  public void setWorkId(String workId) {
+    this.workId = workId;
+  }
+
+  public String getHouseId() {
+    return houseId;
+  }
+
+  public void setHouseId(String houseId) {
+    this.houseId = houseId;
+  }
+
+  public String getTenancyId() {
+    return tenancyId;
+  }
+
+  public void setTenancyId(String tenancyId) {
+    this.tenancyId = tenancyId;
+  }
+
   private String collectionStatus;
 
 

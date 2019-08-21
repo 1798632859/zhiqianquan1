@@ -2,6 +2,7 @@ package com.huyang.zhiqianquan.entity;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Group implements Serializable {
 
@@ -10,9 +11,36 @@ public class Group implements Serializable {
   private String groupCooment;
   private String groupName;
   private String groupStatus;
+  private List<Chatroom> chatroom;
 
+    public List<Chatroom> getChatroom() {
+        return chatroom;
+    }
 
-  public String getGroupId() {
+    public void setChatroom(List<Chatroom> chatroom) {
+        this.chatroom = chatroom;
+    }
+
+    public List<Chatroom> getChatroomList() {
+        return chatroomList;
+    }
+
+    public void setChatroomList(List<Chatroom> chatroomList) {
+        this.chatroomList = chatroomList;
+    }
+
+    private String founderUser;
+  private List<Chatroom> chatroomList;
+
+    public String getFounderUser() {
+        return founderUser;
+    }
+
+    public void setFounderUser(String founderUser) {
+        this.founderUser = founderUser;
+    }
+
+    public String getGroupId() {
     return groupId;
   }
 

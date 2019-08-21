@@ -2,24 +2,71 @@ package com.huyang.zhiqianquan.entity;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 public class House implements Serializable {
 
   private String houseId;
   private String userId;
+  private String housePeople;
   private String houseType;
   private String houseAtcity;
   private String houseRegion;
   private String housePost;
-  private long housePrice;
-  private String houseContact;
-  private String houseLabel;
+  private Integer housePrice;
+  private String houseVx;
+  private String houseTelephone;
+  private String houseLabel1;
+  private String houseLabel2;
+  private String houseLabel3;
   private String houseTitle;
   private String houseDescribe;
-  private String houseImages;
   private java.sql.Timestamp houseTime;
   private String houseStatus;
 
+  private User user;
+  private List<Chart> chart;
+
+
+  public String getHouseVx() {
+        return houseVx;
+    }
+
+    public void setHouseVx(String houseVx) {
+        this.houseVx = houseVx;
+    }
+
+    public String getHouseTelephone() {
+        return houseTelephone;
+    }
+
+    public void setHouseTelephone(String houseTelephone) {
+        this.houseTelephone = houseTelephone;
+    }
+
+    public String getHousePeople() {
+        return housePeople;
+    }
+
+    public void setHousePeople(String housePeople) {
+        this.housePeople = housePeople;
+    }
+
+    public List<Chart> getChart() {
+    return chart;
+  }
+
+  public void setChart(List<Chart> chart) {
+    this.chart = chart;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
 
   public String getHouseId() {
     return houseId;
@@ -79,30 +126,36 @@ public class House implements Serializable {
     return housePrice;
   }
 
-  public void setHousePrice(long housePrice) {
+  public void setHousePrice(Integer housePrice) {
     this.housePrice = housePrice;
   }
 
 
-  public String getHouseContact() {
-    return houseContact;
-  }
+    public String getHouseLabel1() {
+        return houseLabel1;
+    }
 
-  public void setHouseContact(String houseContact) {
-    this.houseContact = houseContact;
-  }
+    public void setHouseLabel1(String houseLabel1) {
+        this.houseLabel1 = houseLabel1;
+    }
 
+    public String getHouseLabel2() {
+        return houseLabel2;
+    }
 
-  public String getHouseLabel() {
-    return houseLabel;
-  }
+    public void setHouseLabel2(String houseLabel2) {
+        this.houseLabel2 = houseLabel2;
+    }
 
-  public void setHouseLabel(String houseLabel) {
-    this.houseLabel = houseLabel;
-  }
+    public String getHouseLabel3() {
+        return houseLabel3;
+    }
 
+    public void setHouseLabel3(String houseLabel3) {
+        this.houseLabel3 = houseLabel3;
+    }
 
-  public String getHouseTitle() {
+    public String getHouseTitle() {
     return houseTitle;
   }
 
@@ -117,15 +170,6 @@ public class House implements Serializable {
 
   public void setHouseDescribe(String houseDescribe) {
     this.houseDescribe = houseDescribe;
-  }
-
-
-  public String getHouseImages() {
-    return houseImages;
-  }
-
-  public void setHouseImages(String houseImages) {
-    this.houseImages = houseImages;
   }
 
 

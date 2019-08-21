@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huyang.zhiqianquan.dao.GroupDao">
+    <resultMap id="hashgroup" type="com.huyang.zhiqianquan.entity.Group">
+        <id property="groupId" column="group_id" jdbcType="VARCHAR"/>
+        <result property="groupImage" column="group_image" jdbcType="VARCHAR"/>
+        <result property="groupCooment" column="group_cooment" jdbcType="VARCHAR"/>
+        <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
+        <result property="groupStatus" column="group_status" jdbcType="VARCHAR"/>
+        <result property="founderUser" column="founder_user" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="groupsql">
+      group_id,group_image,group_cooment,group_name,group_status,founder_user
+    </sql>
+    <!--添加社区-->
+    <insert id="addgroup" parameterType="com.huyang.zhiqianquan.entity.Group">
+        insert into group1(
+        <include refid="groupsql"/>
+        ) values (#{groupId},#{groupImage},#{groupCooment},#{groupName},#{groupStatus},#{founderUser})
+    </insert>
+    <!--人员加入群-->
+    <sql id="usergroupsql">
+        user_group_id,user_id,group_id,user_group_status
+    </sql>
+    <insert id="addusergroup" parameterType="com.huyang.zhiqianquan.entity.UserGroup">
+        insert into user_group (
+        <include refid="usergroupsql"/>
+        ) values (#{userGroupId},#{userId},#{groupId},#{userGroupStatus})
+    </insert>
+    <!--更改社区信息-->
+    <update id="updategroup" parameterType="com.huyang.zhiqianquan.entity.Group">
+        update group1
+        <set>
+            <if test="groupImage!=null and groupImage!=''">
+                group_image=#{groupImage}
+            </if>
+            <if test="groupCooment!=null and groupCooment!=''">
+                group_cooment=#{groupCooment}
+            </if>
+            <if test="groupName!=null and groupName!=''">
+                groupName=#{groupName}
+            </if>
+        </set>
+        where group_id=#{groupId}
+    </update>
+    <!--查询社区-->
+    <select id="querygroup" resultMap="hashgroup" parameterType="com.huyang.zhiqianquan.entity.Group">
+        select * from group1
+        <where>
+            <if test="groupId!=null and groupId!=''">
+                group_id=#{groupId}
+            </if>
+            <if test="groupName!=null and groupName!=''">
+                <bind name="groupName1" value="'%'+_parameter.groupName+'%'"></bind>
+                and group_name like #{groupName1}
+            </if>
+            and group_status=1
+        </where>
+    </select>
+    <!--删除社区-->
+    <delete id="deletegroup">
+        delete from group1 where group_id=#{groupId}
+    </delete>
+    <resultMap id="usergroup" type="com.huyang.zhiqianquan.entity.UserGroup">
+        <id property="userGroupId" column="user_group_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="groupId" column="group_id" jdbcType="VARCHAR"/>
+        <result property="userGroupStatus" column="user_group_status" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!--查询用户的所有群-->
+    <select id="queryuserallgroup" resultMap="hashgroup">
+      select group1.* from user_group left join group1 on user_group.group_id=group1.group_id
+      where  user_group.user_group_status=1 and group1.group_status=1 and user_group.user_id=#{userId}
+    </select>
+
+
+
+
+    <resultMap id="hashgroup1" type="com.huyang.zhiqianquan.entity.Group">
+        <id property="groupId" column="group_id" jdbcType="VARCHAR"/>
+        <result property="groupImage" column="group_image" jdbcType="VARCHAR"/>
+        <result property="groupCooment" column="group_cooment" jdbcType="VARCHAR"/>
+        <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
+        <result property="groupStatus" column="group_status" jdbcType="VARCHAR"/>
+        <result property="founderUser" column="founder_user" jdbcType="VARCHAR"/>
+        <collection property="chatroom" ofType="com.huyang.zhiqianquan.entity.Chatroom">
+            <id property="chatroomId" column="chatroom_id"/>
+            <result property="userId" column="user_id" />
+            <result property="chatroomLikenum" column="chatroom_likenum" />
+            <result property="chatroomReview" column="chatroom_review"/>
+            <result property="chatroomType" column="chatroom_type" />
+            <result property="chatroomComment" column="chatroom_comment" />
+            <result property="chatroomImage" column="chatroom_image" />
+            <result property="chatroomStatus" column="chatroom_status" />
+            <result property="chatroomData" column="chatroom_data" />
+            <association property="user" javaType="com.huyang.zhiqianquan.entity.User">
+                <result property="userName" column="user_name"></result>
+                <result property="userImage" column="user_image"></result>
+                <result property="userSchool" column="user_school"></result>
+                <result property="userCompany" column="user_company"></result>
+                <result property="userPost" column="user_post"></result>
+
+            </association>
+        </collection>
+    </resultMap>
+
+    <!--根据社区查社区帖子-->
+    <select id="querygroupchartroom">
+        select chatroom.*,group1.group_image,group1.group_name from group1
+        left join group_chatroom on group1.group_id=group_chatroom.group_id
+        left join chatroom on group_chatroom.chatroom_id=chatroom.chatroom_id where  group1.group_id=#{groupId}
+    </select>
+</mapper>
