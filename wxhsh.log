@@ -1,0 +1,100 @@
+2019-08-21 09:12:01.182  INFO 24772 --- [main] c.h.zhiqianquan.ZhiqianquanApplication   : Starting ZhiqianquanApplication on 9UZ85FJO0MT1NZG with PID 24772 (D:\GitHub\zhiqianquan\target\classes started by Administrator in D:\GitHub\zhiqianquan)
+2019-08-21 09:12:01.192  INFO 24772 --- [main] c.h.zhiqianquan.ZhiqianquanApplication   : The following profiles are active: dev
+2019-08-21 09:12:02.118  INFO 24772 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-21 09:12:02.120  INFO 24772 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-21 09:12:02.142  INFO 24772 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8ms. Found 0 repository interfaces.
+2019-08-21 09:12:02.474  INFO 24772 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$a9c76481] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-21 09:12:02.753  INFO 24772 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 80 (http)
+2019-08-21 09:12:02.773  INFO 24772 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-08-21 09:12:02.773  INFO 24772 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-21 09:12:02.887  INFO 24772 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-08-21 09:12:02.888  INFO 24772 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1642 ms
+2019-08-21 09:12:03.408  INFO 24772 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-21 09:12:03.515  WARN 24772 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-08-21 09:12:04.007  INFO 24772 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 80 (http) with context path ''
+2019-08-21 09:12:04.010  INFO 24772 --- [main] c.h.zhiqianquan.ZhiqianquanApplication   : Started ZhiqianquanApplication in 3.25 seconds (JVM running for 9.304)
+2019-08-21 10:00:28.730  INFO 24772 --- [http-nio-80-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-08-21 10:00:28.733  INFO 24772 --- [http-nio-80-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-08-21 10:00:28.783  INFO 24772 --- [http-nio-80-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 49 ms
+2019-08-21 10:00:29.057  INFO 24772 --- [http-nio-80-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-08-21 10:00:29.314  INFO 24772 --- [http-nio-80-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-08-21 10:02:37.488  INFO 24028 --- [main] c.h.zhiqianquan.ZhiqianquanApplication   : Starting ZhiqianquanApplication on 9UZ85FJO0MT1NZG with PID 24028 (D:\GitHub\zhiqianquan\target\classes started by Administrator in D:\GitHub\zhiqianquan)
+2019-08-21 10:02:37.490  INFO 24028 --- [main] c.h.zhiqianquan.ZhiqianquanApplication   : The following profiles are active: dev
+2019-08-21 10:02:38.534  INFO 24028 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-21 10:02:38.536  INFO 24028 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-21 10:02:38.566  INFO 24028 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10ms. Found 0 repository interfaces.
+2019-08-21 10:02:38.926  INFO 24028 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$b3e61def] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-21 10:02:39.213  INFO 24028 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 80 (http)
+2019-08-21 10:02:39.235  INFO 24028 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-08-21 10:02:39.236  INFO 24028 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-21 10:02:39.363  INFO 24028 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-08-21 10:02:39.363  INFO 24028 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1830 ms
+2019-08-21 10:02:39.870  INFO 24028 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-21 10:02:39.968  WARN 24028 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-08-21 10:02:40.436  INFO 24028 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 80 (http) with context path ''
+2019-08-21 10:02:40.439  INFO 24028 --- [main] c.h.zhiqianquan.ZhiqianquanApplication   : Started ZhiqianquanApplication in 3.388 seconds (JVM running for 4.25)
+2019-08-21 10:02:45.204  INFO 24028 --- [http-nio-80-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-08-21 10:02:45.204  INFO 24028 --- [http-nio-80-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-08-21 10:02:45.212  INFO 24028 --- [http-nio-80-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 7 ms
+2019-08-21 10:02:45.260  INFO 24028 --- [http-nio-80-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-08-21 10:02:45.393  INFO 24028 --- [http-nio-80-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-08-21 10:30:45.488  INFO 6932 --- [main] c.h.zhiqianquan.ZhiqianquanApplication   : Starting ZhiqianquanApplication on 9UZ85FJO0MT1NZG with PID 6932 (D:\GitHub\zhiqianquan\target\classes started by Administrator in D:\GitHub\zhiqianquan)
+2019-08-21 10:30:45.511  INFO 6932 --- [main] c.h.zhiqianquan.ZhiqianquanApplication   : The following profiles are active: dev
+2019-08-21 10:30:48.214  INFO 6932 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-21 10:30:48.217  INFO 6932 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-21 10:30:48.289  INFO 6932 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 37ms. Found 0 repository interfaces.
+2019-08-21 10:30:48.636  INFO 6932 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$ac5e023e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-21 10:30:49.555  INFO 6932 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 80 (http)
+2019-08-21 10:30:49.625  INFO 6932 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-08-21 10:30:49.625  INFO 6932 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-21 10:30:49.964  INFO 6932 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-08-21 10:30:49.964  INFO 6932 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 4324 ms
+2019-08-21 10:30:51.033  INFO 6932 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-21 10:30:51.152  WARN 6932 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-08-21 10:30:51.821  INFO 6932 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 80 (http) with context path ''
+2019-08-21 10:30:51.828  INFO 6932 --- [main] c.h.zhiqianquan.ZhiqianquanApplication   : Started ZhiqianquanApplication in 8.453 seconds (JVM running for 9.689)
+2019-08-21 10:32:01.618  INFO 6932 --- [http-nio-80-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-08-21 10:32:01.619  INFO 6932 --- [http-nio-80-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-08-21 10:32:01.636  INFO 6932 --- [http-nio-80-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 16 ms
+2019-08-21 10:32:01.706  INFO 6932 --- [http-nio-80-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-08-21 10:32:01.918  INFO 6932 --- [http-nio-80-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-08-21 10:46:32.002  INFO 23444 --- [main] c.h.zhiqianquan.ZhiqianquanApplication   : Starting ZhiqianquanApplication on 9UZ85FJO0MT1NZG with PID 23444 (D:\GitHub\zhiqianquan\target\classes started by Administrator in D:\GitHub\zhiqianquan)
+2019-08-21 10:46:32.007  INFO 23444 --- [main] c.h.zhiqianquan.ZhiqianquanApplication   : The following profiles are active: dev
+2019-08-21 10:46:32.821  INFO 23444 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-21 10:46:32.823  INFO 23444 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-21 10:46:32.847  INFO 23444 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8ms. Found 0 repository interfaces.
+2019-08-21 10:46:33.153  INFO 23444 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$bc89f9e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-21 10:46:33.392  INFO 23444 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 80 (http)
+2019-08-21 10:46:33.411  INFO 23444 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-08-21 10:46:33.411  INFO 23444 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-21 10:46:33.522  INFO 23444 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-08-21 10:46:33.522  INFO 23444 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1467 ms
+2019-08-21 10:46:34.034  INFO 23444 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-21 10:46:34.128  WARN 23444 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-08-21 10:46:34.559  INFO 23444 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 80 (http) with context path ''
+2019-08-21 10:46:34.562  INFO 23444 --- [main] c.h.zhiqianquan.ZhiqianquanApplication   : Started ZhiqianquanApplication in 2.924 seconds (JVM running for 3.736)
+2019-08-21 10:46:50.486  INFO 23444 --- [http-nio-80-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-08-21 10:46:50.487  INFO 23444 --- [http-nio-80-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-08-21 10:46:50.497  INFO 23444 --- [http-nio-80-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 10 ms
+2019-08-21 10:46:50.550  INFO 23444 --- [http-nio-80-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-08-21 10:46:50.672  INFO 23444 --- [http-nio-80-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-08-21 10:47:32.674  INFO 12356 --- [main] c.h.zhiqianquan.ZhiqianquanApplication   : Starting ZhiqianquanApplication on 9UZ85FJO0MT1NZG with PID 12356 (D:\GitHub\zhiqianquan\target\classes started by Administrator in D:\GitHub\zhiqianquan)
+2019-08-21 10:47:32.676  INFO 12356 --- [main] c.h.zhiqianquan.ZhiqianquanApplication   : The following profiles are active: dev
+2019-08-21 10:47:33.507  INFO 12356 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-21 10:47:33.509  INFO 12356 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-21 10:47:33.530  INFO 12356 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8ms. Found 0 repository interfaces.
+2019-08-21 10:47:33.847  INFO 12356 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$ff9a57bb] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-21 10:47:34.089  INFO 12356 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 80 (http)
+2019-08-21 10:47:34.108  INFO 12356 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-08-21 10:47:34.108  INFO 12356 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-21 10:47:34.216  INFO 12356 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-08-21 10:47:34.217  INFO 12356 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1506 ms
+2019-08-21 10:47:34.742  INFO 12356 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-21 10:47:34.833  WARN 12356 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2019-08-21 10:47:35.272  INFO 12356 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 80 (http) with context path ''
+2019-08-21 10:47:35.276  INFO 12356 --- [main] c.h.zhiqianquan.ZhiqianquanApplication   : Started ZhiqianquanApplication in 2.954 seconds (JVM running for 3.763)
+2019-08-21 10:47:45.523  INFO 12356 --- [http-nio-80-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-08-21 10:47:45.523  INFO 12356 --- [http-nio-80-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-08-21 10:47:45.529  INFO 12356 --- [http-nio-80-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2019-08-21 10:47:45.576  INFO 12356 --- [http-nio-80-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-08-21 10:47:45.689  INFO 12356 --- [http-nio-80-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.

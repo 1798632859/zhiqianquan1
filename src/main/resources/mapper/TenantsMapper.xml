@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huyang.zhiqianquan.dao.TenancyDao">
+
+
+
+<resultMap id="hashqiuzu" type="com.huyang.zhiqianquan.entity.Tenancy">
+     <id property="tenancyId" column="tenancy_id" ></id>
+     <result property="tenancyLivetime" column="tenancy_livetime" ></result>
+     <result property="tenancyType" column="tenancy_type" ></result>
+     <result property="tenancy_Requestsex" column="tenancy_requestsex" ></result>
+     <result property="tenancyCity" column="tenancy_city" ></result>
+     <result property="tenancyRegion" column="tenancy_region" ></result>
+     <result property="tenancyPosition" column="tenancy_position" ></result>
+     <result property="tenancyPrice" column="tenancy_Price" ></result>
+     <result property="tenancyPhone" column="tenancy_phone" ></result>
+     <result property="tenancyLabel" column="tenancy_Label" ></result>
+     <result property="tenancyCommed" column="tenancy_commed" ></result>
+     <result property="tenancyFounddata" column="tenancy_founddata" ></result>
+     <result property="tenancyStatus" column="tenancy_status" ></result>
+    <result property="userId" column="user_id" ></result>
+</resultMap>
+
+    <resultMap id="hashcollextion" type="com.huyang.zhiqianquan.entity.Collection">
+        <id property="collectionId" column="collectionId" ></id>
+        <result property="tenancyId" column="tenancy_id" ></result>
+        <result property="userId" column="user_id" ></result>
+        <result property="collectionData" column="collection_data" ></result>
+        <result property="collectionStatus" column="collection_status" ></result>
+    </resultMap>
+
+<!--查询所有求组信息带分页-->
+<select id="findqiuzuall" resultMap="hashqiuzu">
+ select * from tenancy where tenancy_status=1
+</select>
+
+
+<!--     多条件查询求租信息-->
+<select id="findqiuzumore"  parameterType="HashMap" resultMap="hashqiuzu">
+    SELECT * from tenancy
+    <where>
+    <if test="tenancyType != null and tenancyType != ''">
+    and
+        tenancy_type = #{tenancyType} </if>
+    <if test="tenancyRegion != null and tenancyRegion != ''">
+     and
+        tenancy_region = #{tenancyRegion} </if>
+    <if test="tenancyPrice != null and tenancyPrice != ''">
+     and
+        #{tenancyPrice}>tenancy_Price
+    </if>
+        <if test="1==1">
+            and
+            tenancy_status=1
+        </if>
+    </where>
+ </select>
+<!--发布求租信息-->
+<insert id="addtenancy" parameterType="com.huyang.zhiqianquan.entity.Tenancy">
+INSERT INTO tenancy (tenancy_id,user_id, tenancy_livetime, tenancy_type, tenancy_requestsex,tenancy_city,tenancy_region,tenancy_position,tenancy_Price,tenancy_phone,tenancy_Label,tenancy_commed,tenancy_founddata,tenancy_status)
+VALUES (#{tenancyId},#{userId},#{tenancyLivetime},#{tenancyType},#{tenancy_Requestsex},#{tenancyCity},#{tenancyRegion},#{tenancyPosition},#{tenancyPrice},#{tenancyPhone},#{tenancyLabel},#{tenancyCommed},#{tenancyFounddata},1)
+</insert>
+
+
+<!--    模糊查询求租信息-->
+    <select id="likefind"  resultMap="hashqiuzu">
+        <bind name="pattern" value="'%' + pattern + '%'" />
+        select *
+        from tenancy
+        where CONCAT(tenancy_type,tenancy_requestsex,tenancy_city,tenancy_region,tenancy_position,tenancy_Price,tenancy_Label)
+        LIKE #{pattern} and  tenancy_status=1
+    </select>
+<!--    根据用户ID查询求租信息-->
+    <select id="finduserall" resultMap="hashqiuzu">
+ select * from tenancy where tenancy_status=1 and user_id=#{userId}
+</select>
+<!--    修改求租信息-->
+<update id="updatetenancy" parameterType="com.huyang.zhiqianquan.entity.Tenancy">
+ update tenancy set tenancy_livetime=#{tenancyLivetime},tenancy_type=#{tenancyType},tenancy_requestsex=#{tenancy_Requestsex},
+ tenancy_city=#{tenancyCity},tenancy_region=#{tenancyRegion},tenancy_position=#{tenancyPosition},
+ tenancy_Price=#{tenancyPrice},tenancy_phone=#{tenancyPhone},tenancy_Label=#{tenancyLabel},tenancy_commed=#{tenancyCommed}
+ where tenancy_id=#{tenancyId}
+</update>
+    <!--    删除求租信息-->
+    <update id="deletetenancy">
+        update tenancy set tenancy_status=0 where tenancy_id=#{tenancyId} and user_id=#{userId}
+    </update>
+<!--    求租点赞-->
+    <select id="Fabuloustenancy" resultType="int">
+        select ifnull(tenancy_Fabulous,0) from tenancy where tenancy_id=#{tenancyId}
+    </select>
+    <update id="Fabuloustenancyadd">
+        update tenancy set tenancy_Fabulous=#{Fabulous} where tenancy_id=#{tenancyId}
+    </update>
+<!--    查询是否被收藏-->
+    <select id="selectcollextion" resultMap="hashcollextion">
+        select * from collection where user_id=#{userId} and tenancy_id=#{tenancyId}
+    </select>
+<!--    求租收藏-->
+    <insert id="inserttenancy" parameterType="com.huyang.zhiqianquan.entity.Collection" >
+     INSERT INTO collection (collection_id,user_id,tenancy_id,collection_data,collection_status)
+     VALUES                 (#{collectionId},#{userId},#{tenancyId},#{collectionData},1)
+    </insert>
+    <update id="addcollextion">
+        update collection set collection_status=1 where user_id=#{userId} and tenancy_id=#{tenancyId}
+    </update>
+<!--    取消求租收藏-->
+    <update id="deletecollextion">
+        update collection set collection_status=0 where user_id=#{userId} and tenancy_id=#{tenancyId}
+    </update>
+<!--   举报求租-->
+    <insert id="ReportHouse" parameterType="HashMap">
+        INSERT INTO report
+        (report_id,tenancy_id,report_details,
+        report_image1,report_image2,report_image3,report_image4,report_time)
+        VALUE
+        (#{reportId},#{tenancyId},#{reportDetails},
+        #{reportImage1},#{reportImage2},#{reportImage3},#{reportImage4},#{reportTime})
+    </insert>
+
+</mapper>

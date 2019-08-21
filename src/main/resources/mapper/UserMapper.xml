@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huyang.zhiqianquan.dao.UserDao">
+    <!--用户的数据库实体映射-->
+    <sql id="user">
+        user_id as userId,
+        user_name as userName,
+        user_password as userPassword,
+        user_vx as userVx,
+        user_email as userEmail,
+        user_image as userImage,
+        user_school as userSchool,
+        user_sex as userSex,
+        user_company as userCompany,
+        user_post as userPost,
+        user_post_image as userPostImage,
+        user_status as userStatus,
+        user_telephone as userTelephone
+    </sql>
+    <!--查询所有用户信息-->
+    <select id="queryalluser" resultType="com.huyang.zhiqianquan.entity.User">
+        select <include refid="user"></include> from user
+    </select>
+
+
+    <!--根据用户ID查询用户所有信息-->
+    <select id="queryuserbyuserid" resultType="com.huyang.zhiqianquan.entity.User">
+        select <include refid="user"></include> from user where user_id=#{userId}
+    </select>
+    <!--————————————————————————————————————————————————————————————-->
+    <!--————————————————————————————————————————————————————————————-->
+    <!--租房实体数据库映射-->
+    <sql id="house">
+        house_id as houseId,
+        user_id as userId ,
+        house_type as houseType,
+        house_atcity as houseAtcity,
+        house_region as houseRegion,
+        house_post as housePost,
+        house_price as housePrice,
+        house_contact as houseContact,
+        house_label as houseLabel,
+        house_title as houseTitle,
+        house_describe as houseDescribe,
+        house_images as houseImages,
+        house_time as houseTime,
+        house_status as houseStatus
+    </sql>
+    <!--根据用户ID查询用户所有发布过的求租帖子-->
+    <select id="queryhousebyuserid" resultType="com.huyang.zhiqianquan.entity.House">
+        select <include refid="house"></include> from house where user_id=#{userId}
+    </select>
+    <!--————————————————————————————————————————————————————————————-->
+    <!--————————————————————————————————————————————————————————————-->
+    <sql id="work">
+        work_id as workId,
+        user_id as userId,
+        work_type as workType,
+        work_image as workImage,
+        work_company_name as workCompanyName,
+        work_post_name as workPostName,
+        work_post_type as workPostType,
+        work_city as workCity,
+        work_entry as workEntry,
+        work_cycle as workCycle,
+        work_resume as workResume,
+        work_address as workAddress,
+        work_email as workEmail,
+        work_desride as workDesride,
+        work_data as workData,
+        work_status as workStatus
+    </sql>
+    <!--根据用户ID查询用户所有发布过的职位帖子-->
+    <select id="queryworkbyuserid" resultType="com.huyang.zhiqianquan.entity.Work">
+        select <include refid="work"></include> from work where user_id=#{userId}
+    </select>
+
+    <!--————————————————————————————————————————————————————————————-->
+    <!--————————————————————————————————————————————————————————————-->
+    <!--查询所有求租通过用户ID-->
+    <select id="querytenancybyuserid" resultType="com.huyang.zhiqianquan.entity.Tenancy">
+        select  * from  tenancy where user_id=#{userId}
+    </select>
+    <select id="querychatroombyuserid" resultType="com.huyang.zhiqianquan.entity.Chatroom">
+        select  * from  chatroom where user_id=#{userId}
+    </select>
+    <!--修改用户信息-->
+    <update id="updateuserbyid" parameterType="hashmap">
+            UPDATE `user`
+          SET user_sex = #{userSex},
+          user_school = #{userSchool},
+          <if test="userCompany!=null">
+              user_company=#{userCompany},
+          </if>
+        <if test="userCompany!=null">
+            user_post=#{userPost},
+        </if>
+        <if test="userVx!=null">
+            user_vx=#{userVx},
+        </if>
+        <if test="userTelephone!=null">
+            user_telephone=#{userTelephone},
+        </if>
+        <if test="1==1">
+            user_status='1'
+        </if>
+          WHERE
+	          user_id = #{userId}
+    </update>
+    <!--根据用户id查询所收藏的work-->
+    <resultMap id="hashWork" type="com.huyang.zhiqianquan.entity.Work">
+        <id property="workId" column="work_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="workType" column="work_type" jdbcType="VARCHAR"/>
+        <result property="workImage" column="work_image" jdbcType="VARCHAR"/>
+        <result property="workCompanyName" column="work_company_name" jdbcType="VARCHAR"/>
+        <result property="workPostName" column="work_post_name" jdbcType="VARCHAR"/>
+        <result property="workPostType" column="work_post_type" jdbcType="VARCHAR"/>
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"/>
+        <result property="workEntry" column="work_entry" jdbcType="VARCHAR"/>
+        <result property="workCycle" column="work_cycle" jdbcType="VARCHAR"/>
+        <result property="workResume" column="work_resume" jdbcType="VARCHAR"/>
+        <result property="workAddress" column="work_address" jdbcType="VARCHAR"/>
+        <result property="workEmail" column="work_email" jdbcType="VARCHAR"/>
+        <result property="workDesride" column="work_desride" jdbcType="VARCHAR"/>
+        <result property="workData" column="work_data" jdbcType="TIMESTAMP"/>
+        <result property="workStatus" column="work_status" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!--查询用户收藏的实习-->
+    <select id="querycollectionworkbyuserid" resultMap="hashWork">
+        SELECT
+	work.*
+FROM
+	work
+	LEFT JOIN collection ON work.work_id = collection.work_id
+WHERE
+	collection.user_id = #{userId} and work.user_id=#{userId}
+    </select>
+
+
+
+
+    <!--查询用户收藏的求职-->
+    <resultMap id="hashqiuzu" type="com.huyang.zhiqianquan.entity.Tenancy">
+        <id property="tenancyId" column="tenancy_id" ></id>
+        <result property="tenancyLivetime" column="tenancy_livetime" ></result>
+        <result property="tenancyType" column="tenancy_type" ></result>
+        <result property="tenancy_Requestsex" column="tenancy_requestsex" ></result>
+        <result property="tenancyCity" column="tenancy_city" ></result>
+        <result property="tenancyRegion" column="tenancy_region" ></result>
+        <result property="tenancyPosition" column="tenancy_position" ></result>
+        <result property="tenancyPrice" column="tenancy_Price" ></result>
+        <result property="tenancyPhone" column="tenancy_phone" ></result>
+        <result property="tenancyLabel" column="tenancy_Label" ></result>
+        <result property="tenancyCommed" column="tenancy_commed" ></result>
+        <result property="tenancyFounddata" column="tenancy_founddata" ></result>
+        <result property="tenancyStatus" column="tenancy_status" ></result>
+        <result property="userId" column="user_id" ></result>
+    </resultMap>
+    <select id="querycollectiontenancybyuserid" resultMap="hashqiuzu">
+   SELECT
+	tenancy.*
+FROM
+	tenancy
+	LEFT JOIN collection ON tenancy.tenancy_id = collection.tenancy_id
+WHERE
+	collection.user_id =#{userId} and tenancy.user_id=#{userId}
+    </select>
+
+    <!--查询用户收藏的房源-->
+    <resultMap id="houseMap" type="com.huyang.zhiqianquan.entity.House">
+        <id column="house_id" property="houseId" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="house_type" property="houseType" jdbcType="VARCHAR"/>
+        <result column="house_atcity" property="houseAtcity" jdbcType="VARCHAR"/>
+        <result column="house_region" property="houseRegion" jdbcType="VARCHAR"/>
+        <result column="house_post" property="housePost" jdbcType="VARCHAR"/>
+        <result column="house_price" property="housePrice" jdbcType="INTEGER"/>
+        <result column="house_contact" property="houseContact" jdbcType="VARCHAR"/>
+        <result column="house_label" property="houseLabel" jdbcType="VARCHAR"/>
+        <result column="house_title" property="houseTitle" jdbcType="VARCHAR"/>
+        <result column="house_describe" property="houseDescribe" jdbcType="VARCHAR"/>
+        <result column="house_image_id" property="houseImages" jdbcType="VARCHAR"/>
+        <result column="house_time" property="houseTime" jdbcType="TIMESTAMP"/>
+        <result column="house_status" property="houseStatus" jdbcType="CHAR"/>
+    </resultMap>
+
+    <select id="querycollectionhousebyuserid" resultMap="houseMap">
+       SELECT
+	house.*
+FROM
+	house
+	LEFT JOIN collection ON house.house_id = collection.house_id
+WHERE
+	collection.user_id = #{userId}
+    </select>
+
+    
+
+</mapper>

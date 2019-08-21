@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huyang.zhiqianquan.dao.HouseDao">
+    <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true" />
+
+    <resultMap id="houseMap" type="com.huyang.zhiqianquan.entity.House">
+        <id column="house_id" property="houseId" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="house_people" property="housePeople" jdbcType="VARCHAR"/>
+        <result column="house_type" property="houseType" jdbcType="VARCHAR"/>
+        <result column="house_atcity" property="houseAtcity" jdbcType="VARCHAR"/>
+        <result column="house_region" property="houseRegion" jdbcType="VARCHAR"/>
+        <result column="house_post" property="housePost" jdbcType="VARCHAR"/>
+        <result column="house_price" property="housePrice" jdbcType="INTEGER"/>
+        <result column="house_vx" property="houseVx" jdbcType="VARCHAR"/>
+        <result column="house_telephone" property="houseTelephone" jdbcType="VARCHAR"/>
+        <result column="house_label1" property="houseLabel1" jdbcType="VARCHAR"/>
+        <result column="house_label2" property="houseLabel2" jdbcType="VARCHAR"/>
+        <result column="house_label3" property="houseLabel3" jdbcType="VARCHAR"/>
+        <result column="house_title" property="houseTitle" jdbcType="VARCHAR"/>
+        <result column="house_describe" property="houseDescribe" jdbcType="VARCHAR"/>
+        <result column="house_time" property="houseTime" jdbcType="TIMESTAMP"/>
+        <result column="house_status" property="houseStatus" jdbcType="CHAR"/>
+        <association property="user" javaType="com.huyang.zhiqianquan.entity.User">
+            <id column="user_id" property="userId" jdbcType="VARCHAR"/>
+            <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+            <result column="user_password" property="userPassword" jdbcType="VARCHAR"/>
+            <result column="user_vx" property="userVx" jdbcType="VARCHAR"/>
+            <result column="user_email" property="userEmail" jdbcType="VARCHAR"/>
+            <result column="user_image" property="userImage" jdbcType="VARCHAR"/>
+            <result column="user_school" property="userSchool" jdbcType="VARCHAR"/>
+            <result column="user_sex" property="userSex" jdbcType="VARCHAR"/>
+            <result column="user_company" property="userCompany" jdbcType="VARCHAR"/>
+            <result column="user_post" property="userPost" jdbcType="VARCHAR"/>
+            <result column="user_post_image" property="userPostImage" jdbcType="VARCHAR"/>
+            <result column="user_status" property="userStatus" jdbcType="CHAR"/>
+            <result column="user_telephone" property="userTelephone" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="chartMap" type="com.huyang.zhiqianquan.entity.Chart">
+        <id column="chart_id" property="chartId" jdbcType="VARCHAR"/>
+        <result column="house_id" property="houseId" jdbcType="VARCHAR"/>
+        <result column="image_name" property="imageName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <!--查询房源列表-->
+    <select id="HouseList" resultMap="houseMap" parameterType="HashMap">
+        SELECT
+            h.*,
+            u.user_name,
+            u.user_school,
+            u.user_image,
+            u.user_sex,
+            user_company
+        FROM
+            house h
+            LEFT JOIN user u ON h.user_id = u.user_id
+          <where>
+              house_status = 1
+              <if test="houseType!=null and houseType!=''">
+                  AND h.house_type = #{houseType}
+              </if>
+              <if test="houseAtcity!=null and houseAtcity!=''">
+                  AND h.house_atcity = #{houseAtcity}
+              </if>
+              <if test="houseRegion!=null and houseRegion !=''">
+                  AND h.house_region = #{houseRegion}
+              </if>
+              <if test="minPrice!=null and minPrice!='' and maxPrice!=null and maxPrice!=''">
+                  <if test="minPrice==maxPrice">
+                      <if test="minPrice==3000">
+                          AND h.house_price>=3000
+                      </if>
+                      <if test="minPrice==1000">
+                          AND h.house_price &lt; 1000
+                      </if>
+                  </if>
+                  <if test="minPrice!=maxPrice">
+                      AND h.house_price BETWEEN ${minPrice} and ${maxPrice}
+                  </if>
+              </if>
+          </where>
+        ORDER BY house_time DESC
+    </select>
+    <!--查询房源详情-->
+    <select id="FindHouseById" resultMap="houseMap">
+        SELECT
+            *
+        FROM
+            house h
+            LEFT JOIN USER u ON h.user_id = u.user_id
+        WHERE
+            house_id = #{houseId}
+    </select>
+    <!--按照房源ID查询房源图片-->
+    <select id="FindImageByHouseId" resultMap="chartMap">
+        select * FROM chart where house_id=#{houseId}
+    </select>
+    <!--收藏房源-->
+    <insert id="Collection" parameterType="HashMap">
+	    INSERT INTO collection (collection_id,user_id,house_id,collection_data,collection_status)
+	    VALUES(#{collectionId},#{userId},#{houseId},#{collectionData},'1')
+    </insert>
+    <!--发布房源信息-->
+    <insert id="ReleaseHouse" parameterType="HashMap">
+    INSERT INTO house
+    (house_id,user_id,house_people,house_type,house_atcity,house_region,house_post,house_price,house_vx,
+    house_telephone,house_label1,house_label2,house_label3,house_title,house_describe,house_time,house_status)
+    VALUES
+        (#{houseId},#{userId},#{housePeople},#{houseType},#{houseAtcity},#{houseRegion},#{housePost},${housePrice},
+        #{houseVx},#{houseTelephone},#{houseLabel1},#{houseLabel2},#{houseLabel3},#{houseTitle},#{houseDescribe},
+        #{houseTime},'1')
+    </insert>
+    <!--插入房源图片-->
+    <insert id="RelesaseHouseImage" parameterType="HashMap">
+        INSERT INTO chart
+        VALUES
+        (#{chartId},#{houseId},#{imageName})
+
+    </insert>
+    <!--举报房源-->
+    <insert id="ReportHouse" parameterType="HashMap">
+        INSERT INTO report
+        (report_id,house_id,tenancy_id,report_details,
+        report_image1,report_image2,report_image3,report_image4,report_time)
+        VALUE
+        (#{reportId},#{houseId},#{tenancyId},#{reportDetails},
+        #{reportImage1},#{reportImage2},#{reportImage3},#{reportImage4},#{reportTime})
+    </insert>
+
+    <!--    模糊查询求租信息-->
+    <select id="likefind"  resultMap="houseMap">
+        <bind name="pattern" value="'%' + pattern + '%'" />
+        select *
+        from house
+        where CONCAT(house_people,house_type,house_atcity,house_region,house_post,house_price,house_label1,
+        house_label2,house_label3)
+        LIKE #{pattern} and  house_status=1
+    </select>
+</mapper>

@@ -138,25 +138,25 @@ public class GroupApi {
     /**
      * 上传图片
      */
-//    @RequestMapping("/api/user/upload")
-//    public JsonResult upload(@RequestParam("photo") MultipartFile file) {
-//        JsonResult result = null;
-//        String[] a = file.getOriginalFilename().split("\\.");
-//        if (!file.isEmpty()) {
-//            try {
-//                String filename = UUID.randomUUID().toString().replaceAll("-", "");
-//                file.transferTo(new File(uploadpath + "\\" + filename + "." + a[1]));
-//                result = new JsonResult("200", "上传成功", filename + "." + a[1]);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                result = new JsonResult("500", "上传文件超过100kb", a[0]);
-//            }
-//        } else {
-//            result = new JsonResult("404", "找不到文件", "");
-//        }
-//
-//        return result;
-//    }
+    @RequestMapping("/api/user/uploads")
+    public JsonResult upload(@RequestParam("photo") MultipartFile file) {
+        JsonResult result = null;
+        String[] a = file.getOriginalFilename().split("\\.");
+        if (!file.isEmpty()) {
+            try {
+                String filename = UUID.randomUUID().toString().replaceAll("-", "");
+                file.transferTo(new File(uploadpath + "\\" + filename + "." + a[1]));
+                result = new JsonResult("200", "上传成功", filename + "." + a[1]);
+            } catch (Exception e) {
+                e.printStackTrace();
+                result = new JsonResult("500", "上传文件超过100kb", a[0]);
+            }
+        } else {
+            result = new JsonResult("404", "找不到文件", "");
+        }
+
+        return result;
+    }
     /**
      * 查询用户的所有群
      */
