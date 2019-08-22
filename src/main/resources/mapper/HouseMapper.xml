@@ -154,9 +154,9 @@
     <select id="likefind"  resultMap="houseMap">
         <bind name="pattern" value="'%' + pattern + '%'" />
         select *
-        from house
-        where CONCAT(house_people,house_type,house_atcity,house_region,house_post,house_price,house_label1,
-        house_label2,house_label3)
-        LIKE #{pattern} and  house_status=1
+        from house h LEFT JOIN user u ON h.user_id=u.user_id
+        where CONCAT(h.house_people,h.house_type,h.house_atcity,h.house_region,h.house_post,h.house_price,h.house_label1,
+        h.house_label2,h.house_label3)
+        LIKE #{pattern} and  h.house_status=1
     </select>
 </mapper>
