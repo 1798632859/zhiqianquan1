@@ -123,15 +123,6 @@
         left join user_group on group1.group_id=user_group.group_id  group by user_group.user_id order by COUNT(user_group.user_id) desc
     </select>
 
-    <!--查询所有的群的人数，根据人数降序-->
-    <resultMap id="hashorder" type="com.huyang.zhiqianquan.entity.order">
-        <id property="number" column="number"/>
-        <result property="groupName" column="group_name" />
-        <result property="groupimage" column="group_image"/>
-    </resultMap>
-    <select id="querynumberdesc" resultMap="hashorder">
-        select COUNT(user_group.user_id) as number ,group1.group_name,group1.group_image from group1
-        left join user_group on group1.group_id=user_group.group_id  group by user_group.user_id order by COUNT(user_group.user_id) desc
-    </select>
+
 
 </mapper>
