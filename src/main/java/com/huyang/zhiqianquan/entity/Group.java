@@ -11,23 +11,17 @@ public class Group implements Serializable {
   private String groupCooment;
   private String groupName;
   private String groupStatus;
+
+  public String getNumber() {
+    return number;
+  }
+
+  public void setNumber(String number) {
+    this.number = number;
+  }
+
   private List<Chatroom> chatroom;
-    private String founderUser;
-
-    private List<Chatroom> chatroomList;
-
-    private User user;
-
-
-
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+  private String number;
 
     public List<Chatroom> getChatroom() {
         return chatroom;
@@ -45,7 +39,8 @@ public class Group implements Serializable {
         this.chatroomList = chatroomList;
     }
 
-
+    private String founderUser;
+  private List<Chatroom> chatroomList;
 
     public String getFounderUser() {
         return founderUser;

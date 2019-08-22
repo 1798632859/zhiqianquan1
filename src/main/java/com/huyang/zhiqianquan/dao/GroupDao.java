@@ -39,6 +39,7 @@ public interface GroupDao {
      */
     List<Group> queryuserallgroup(@Param("userId") String userId);
 
+
     /**
      * 根据社区查社区帖子
      * @param groupId
@@ -51,4 +52,5 @@ public interface GroupDao {
      * @return
      */
     List<order> querynumberdesc();
+
 }

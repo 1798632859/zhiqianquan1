@@ -75,5 +75,4 @@ public class GroupServiceImpl implements GroupService {
         map.put("notowned",list2);
         return map;
     }
-
 }
