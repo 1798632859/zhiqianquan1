@@ -21,6 +21,21 @@
      <result property="tenancyFounddata" column="tenancy_founddata" ></result>
      <result property="tenancyStatus" column="tenancy_status" ></result>
     <result property="userId" column="user_id" ></result>
+    <collection property="list" ofType="com.huyang.zhiqianquan.entity.User">
+        <id column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="user_password" property="userPassword" jdbcType="VARCHAR"/>
+        <result column="user_vx" property="userVx" jdbcType="VARCHAR"/>
+        <result column="user_email" property="userEmail" jdbcType="VARCHAR"/>
+        <result column="user_image" property="userImage" jdbcType="VARCHAR"/>
+        <result column="user_school" property="userSchool" jdbcType="VARCHAR"/>
+        <result column="user_sex" property="userSex" jdbcType="VARCHAR"/>
+        <result column="user_company" property="userCompany" jdbcType="VARCHAR"/>
+        <result column="user_post" property="userPost" jdbcType="VARCHAR"/>
+        <result column="user_post_image" property="userPostImage" jdbcType="VARCHAR"/>
+        <result column="user_status" property="userStatus" jdbcType="CHAR"/>
+        <result column="user_telephone" property="userTelephone" jdbcType="VARCHAR"/>
+    </collection>
 </resultMap>
 
     <resultMap id="hashcollextion" type="com.huyang.zhiqianquan.entity.Collection">
@@ -33,13 +48,16 @@
 
 <!--查询所有求组信息带分页-->
 <select id="findqiuzuall" resultMap="hashqiuzu">
- select * from tenancy where tenancy_status=1
+ select * from tenancy t
+        left join user u on t.user_id=u.user_id where t.tenancy_status=1
 </select>
 
 
 <!--     多条件查询求租信息-->
 <select id="findqiuzumore"  parameterType="HashMap" resultMap="hashqiuzu">
-    SELECT * from tenancy
+    SELECT * from tenancy t
+
+    left join user u on t.user_id=u.user_id
     <where>
     <if test="tenancyType != null and tenancyType != ''">
     and
@@ -53,7 +71,7 @@
     </if>
         <if test="1==1">
             and
-            tenancy_status=1
+            t.tenancy_status=1
         </if>
     </where>
  </select>
@@ -68,13 +86,14 @@ VALUES (#{tenancyId},#{userId},#{tenancyLivetime},#{tenancyType},#{tenancy_Reque
     <select id="likefind"  resultMap="hashqiuzu">
         <bind name="pattern" value="'%' + pattern + '%'" />
         select *
-        from tenancy
+        from tenancy t
+        left join user u on t.user_id=u.user_id
         where CONCAT(tenancy_type,tenancy_requestsex,tenancy_city,tenancy_region,tenancy_position,tenancy_Price,tenancy_Label)
-        LIKE #{pattern} and  tenancy_status=1
+        LIKE #{pattern} and  t.tenancy_status=1
     </select>
 <!--    根据用户ID查询求租信息-->
     <select id="finduserall" resultMap="hashqiuzu">
- select * from tenancy where tenancy_status=1 and user_id=#{userId}
+ select * from tenancy  t left join user u on t.user_id=u.user_id where t.tenancy_status=1 and user_id=#{userId}
 </select>
 <!--    修改求租信息-->
 <update id="updatetenancy" parameterType="com.huyang.zhiqianquan.entity.Tenancy">

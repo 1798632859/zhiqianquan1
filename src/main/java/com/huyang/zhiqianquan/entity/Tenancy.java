@@ -2,6 +2,7 @@ package com.huyang.zhiqianquan.entity;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Tenancy implements Serializable {
 
@@ -19,7 +20,7 @@ public class Tenancy implements Serializable {
   private String tenancyCommed;
   private java.sql.Timestamp tenancyFounddata;
   private String tenancyStatus;
-
+  private List<User> list;
     public long getTenancyFabulous() {
         return tenancyFabulous;
     }
