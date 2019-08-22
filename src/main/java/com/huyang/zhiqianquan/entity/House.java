@@ -23,10 +23,25 @@ public class House implements Serializable {
   private String houseDescribe;
   private java.sql.Timestamp houseTime;
   private String houseStatus;
-
+  private Chart chart;
   private User user;
-  private List<Chart> chart;
+  private List<Chart> charts;
 
+  public Chart getChart() {
+    return chart;
+  }
+
+  public void setChart(Chart chart) {
+    this.chart = chart;
+  }
+
+  public List<Chart> getCharts() {
+    return charts;
+  }
+
+  public void setCharts(List<Chart> charts) {
+    this.charts = charts;
+  }
 
   public String getHouseVx() {
         return houseVx;
@@ -51,14 +66,6 @@ public class House implements Serializable {
     public void setHousePeople(String housePeople) {
         this.housePeople = housePeople;
     }
-
-    public List<Chart> getChart() {
-    return chart;
-  }
-
-  public void setChart(List<Chart> chart) {
-    this.chart = chart;
-  }
 
   public User getUser() {
     return user;
