@@ -10,6 +10,7 @@
         <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
         <result property="groupStatus" column="group_status" jdbcType="VARCHAR"/>
         <result property="founderUser" column="founder_user" jdbcType="VARCHAR"/>
+        <result property="number" column="number" />
     </resultMap>
     <sql id="groupsql">
       group_id,group_image,group_cooment,group_name,group_status,founder_user
@@ -47,7 +48,7 @@
     </update>
     <!--查询社区-->
     <select id="querygroup" resultMap="hashgroup" parameterType="com.huyang.zhiqianquan.entity.Group">
-        select * from group1
+        select group1.*,COUNT(user_group.user_id) as number  from group1  left join user_group on group1.group_id=user_group.group_id
         <where>
             <if test="groupId!=null and groupId!=''">
                 group_id=#{groupId}
@@ -56,7 +57,7 @@
                 <bind name="groupName1" value="'%'+_parameter.groupName+'%'"></bind>
                 and group_name like #{groupName1}
             </if>
-            and group_status=1
+            and group_status=1 group by group1.group_id
         </where>
     </select>
     <!--删除社区-->
@@ -96,13 +97,11 @@
             <result property="chatroomImage" column="chatroom_image" />
             <result property="chatroomStatus" column="chatroom_status" />
             <result property="chatroomData" column="chatroom_data" />
-            <association property="user" javaType="com.huyang.zhiqianquan.entity.User">
                 <result property="userName" column="user_name"></result>
                 <result property="userImage" column="user_image"></result>
                 <result property="userSchool" column="user_school"></result>
                 <result property="userCompany" column="user_company"></result>
                 <result property="userPost" column="user_post"></result>
-            </association>
         </collection>
     </resultMap>
 
@@ -112,6 +111,17 @@
     left join group_chatroom on group1.group_id=group_chatroom.group_id
     left join chatroom on group_chatroom.chatroom_id=chatroom.chatroom_id
     left join user on chatroom.user_id=user.user_id where  group1.group_id=#{groupId}
+    </select>
+
+    <!--查询所有的群的人数，根据人数降序-->
+    <resultMap id="hashorder" type="com.huyang.zhiqianquan.entity.order">
+        <id property="number" column="number"/>
+        <result property="groupName" column="group_name" />
+        <result property="groupimage" column="group_image"/>
+    </resultMap>
+    <select id="querynumberdesc" resultMap="hashorder">
+        select COUNT(user_group.user_id) as number ,group1.group_name,group1.group_image from group1
+        left join user_group on group1.group_id=user_group.group_id  group by user_group.user_id order by COUNT(user_group.user_id) desc
     </select>
 
 </mapper>

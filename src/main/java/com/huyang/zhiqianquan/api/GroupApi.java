@@ -188,5 +188,25 @@ public class GroupApi {
         }
         return result;
     }
+    /**
+     * 查询所有的群的人数，根据人数降序,并查询该用户已拥有的社区
+     */
+    @RequestMapping("/api/group/have")
+    public JsonResult grouporder(String userId) {
+        JsonResult result = null;
+        try {
+            HashMap map=GroupServiceImpl.grouporder(userId);
+            if(map!=null){
+                result = new JsonResult("200", "查询所拥有社区成功", map);
+            }else{
+                result = new JsonResult("400", "查询所拥有社区失败", null);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new JsonResult("500", "查询所拥有社区异常", e.getMessage());
+        }
+        return result;
+    }
 
 }

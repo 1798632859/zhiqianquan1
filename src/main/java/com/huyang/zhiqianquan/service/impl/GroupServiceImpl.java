@@ -4,6 +4,7 @@ import com.huyang.zhiqianquan.dao.GroupDao;
 import com.huyang.zhiqianquan.entity.Group;
 import com.huyang.zhiqianquan.entity.User;
 import com.huyang.zhiqianquan.entity.UserGroup;
+import com.huyang.zhiqianquan.entity.order;
 import com.huyang.zhiqianquan.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,5 +63,16 @@ public class GroupServiceImpl implements GroupService {
     public Group querygroupchartroom(String groupId) {
         return dao.querygroupchartroom(groupId);
     }
-
+    /**
+     * 查询所有的群的人数，根据人数降序,并查询该用户已拥有的社区
+     */
+    @Override
+    public HashMap grouporder(String userId) {
+        HashMap map=new HashMap();
+        List<Group> list1=dao.queryuserallgroup(userId);
+        List<order> list2=dao.querynumberdesc();
+        map.put("owned",list1);
+        map.put("notowned",list2);
+        return map;
+    }
 }
