@@ -4,7 +4,18 @@ import java.util.List;
 
 public class MyCollection {
     private List CWorks;
+    private List CTenancys;
+    private List CHouses;
 
+    public List getCChatroom() {
+        return CChatroom;
+    }
+
+    public void setCChatroom(List CChatroom) {
+        this.CChatroom = CChatroom;
+    }
+
+    private List CChatroom;
     public List getCWorks() {
         return CWorks;
     }
@@ -29,8 +40,7 @@ public class MyCollection {
         this.CHouses = CHouses;
     }
 
-    private List CTenancys;
-    private List CHouses;
+
     public MyCollection(List CWorks,List CTenancys,List CHouses){
         this.CWorks=CWorks;
         this.CTenancys=CTenancys;

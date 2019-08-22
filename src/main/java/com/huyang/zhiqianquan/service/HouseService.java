@@ -1,6 +1,7 @@
 package com.huyang.zhiqianquan.service;
 
 import com.huyang.zhiqianquan.entity.Chart;
+import com.huyang.zhiqianquan.entity.Collection;
 import com.huyang.zhiqianquan.entity.House;
 import com.huyang.zhiqianquan.entity.Tenancy;
 import org.apache.ibatis.annotations.Param;
@@ -15,6 +16,8 @@ public interface HouseService {
     public House FindHouseById(String houseId);
     //按照房源ID查询房源图片
     public List<Chart> FindImageByHouseId(String houseId);
+    //按照用户ID查询收藏的房源
+    public Collection FindHouseCollection(HashMap<String, Object> map);
     //按照房源ID收藏
     public int Collection(HashMap<String, Object> map);
     //发布房源信息

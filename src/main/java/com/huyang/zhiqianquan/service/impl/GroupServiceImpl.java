@@ -53,4 +53,14 @@ public class GroupServiceImpl implements GroupService {
     public List<Group> queryuserallgroup(String userId) {
         return dao.queryuserallgroup(userId);
     }
+    /**
+     * 根据社区查社区帖子
+     * @param groupId
+     * @return
+     */
+    @Override
+    public Group querygroupchartroom(String groupId) {
+        return dao.querygroupchartroom(groupId);
+    }
+
 }

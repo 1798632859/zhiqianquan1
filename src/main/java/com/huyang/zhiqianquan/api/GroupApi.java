@@ -172,7 +172,21 @@ public class GroupApi {
         }
         return result;
     }
+
     /**
      * 查询该社区下所有的帖子
      */
+    @RequestMapping("/api/query/groupchartroom")
+    public JsonResult querygroupchartroom(String groupId) {
+        JsonResult result = null;
+        try {
+            Group group = GroupServiceImpl.querygroupchartroom(groupId);
+            result = new JsonResult("200", "查询所有社区成功", group);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new JsonResult("500", "查询所有社区异常", e.getMessage());
+        }
+        return result;
+    }
+
 }

@@ -3,12 +3,14 @@ package com.huyang.zhiqianquan.api;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.huyang.zhiqianquan.entity.Chart;
+import com.huyang.zhiqianquan.entity.Collection;
 import com.huyang.zhiqianquan.entity.House;
 import com.huyang.zhiqianquan.entity.Tenancy;
 import com.huyang.zhiqianquan.service.HouseService;
 import com.huyang.zhiqianquan.vo.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,9 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/house")
 public class HouseApi {
@@ -93,6 +95,36 @@ public class HouseApi {
     }
 
     /**
+     * 查询房源是否收藏
+     * @param houseId
+     * @param userId
+     * @return
+     */
+    @RequestMapping("/isCollection")
+    public JsonResult FindHouseCollection(String houseId,String userId){
+        JsonResult result = null;
+        HashMap<String ,Object> map = new HashMap<>();
+        try{
+            map.put("houseId",houseId);
+            map.put("userId",userId);
+            Collection collection = houseService.FindHouseCollection(map);
+            if(collection!=null){
+                if("1".equals(collection.getCollectionStatus())){
+                    result = new JsonResult("已收藏的","200","");
+                }else{
+                    result = new JsonResult("未收藏的","404","");
+                }
+            }else{
+                result = new JsonResult("未收藏的","404","");
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+            result = new JsonResult("系统异常","500","");
+        }
+        return result;
+    }
+
+    /**
      * 收藏房源
      * @param houseId
      * @param userId
@@ -103,12 +135,14 @@ public class HouseApi {
         JsonResult result = null;
         HashMap<String ,Object> map = new HashMap<>();
         try {
-            map.put("collectionId", UUID.randomUUID().toString());
-            map.put("userId",userId);
             map.put("houseId",houseId);
+            map.put("userId",userId);
+            map.put("collectionId", UUID.randomUUID().toString());
             map.put("collectionData",new Timestamp(System.currentTimeMillis()));
             int i = houseService.Collection(map);
-            if(i==1){
+            if(i==3){
+                result = new JsonResult("已收藏过，无需重复","202","");
+            }else if(i==1){
                 result = new JsonResult("收藏成功","200","");
             }else{
                 result = new JsonResult("收藏失败","404","");

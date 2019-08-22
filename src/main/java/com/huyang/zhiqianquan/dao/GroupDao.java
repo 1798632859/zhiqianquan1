@@ -37,4 +37,13 @@ public interface GroupDao {
      * 查询用户所拥有的群
      */
     List<Group> queryuserallgroup(@Param("userId") String userId);
+
+
+    /**
+     * 根据社区查社区帖子
+     * @param groupId
+     * @return
+     */
+    Group querygroupchartroom(@Param("groupId") String groupId);
+
 }

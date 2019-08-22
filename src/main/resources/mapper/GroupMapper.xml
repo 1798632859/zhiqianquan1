@@ -78,6 +78,7 @@
 
 
 
+
     <resultMap id="hashgroup1" type="com.huyang.zhiqianquan.entity.Group">
         <id property="groupId" column="group_id" jdbcType="VARCHAR"/>
         <result property="groupImage" column="group_image" jdbcType="VARCHAR"/>
@@ -101,15 +102,16 @@
                 <result property="userSchool" column="user_school"></result>
                 <result property="userCompany" column="user_company"></result>
                 <result property="userPost" column="user_post"></result>
-
             </association>
         </collection>
     </resultMap>
 
     <!--根据社区查社区帖子-->
-    <select id="querygroupchartroom">
-        select chatroom.*,group1.group_image,group1.group_name from group1
-        left join group_chatroom on group1.group_id=group_chatroom.group_id
-        left join chatroom on group_chatroom.chatroom_id=chatroom.chatroom_id where  group1.group_id=#{groupId}
+    <select id="querygroupchartroom" resultMap="hashgroup1">
+    select chatroom.*,group1.* ,user.user_name,user.user_image,user.user_school,user.user_company,user.user_post from group1
+    left join group_chatroom on group1.group_id=group_chatroom.group_id
+    left join chatroom on group_chatroom.chatroom_id=chatroom.chatroom_id
+    left join user on chatroom.user_id=user.user_id where  group1.group_id=#{groupId}
     </select>
+
 </mapper>

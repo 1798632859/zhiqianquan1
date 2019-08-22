@@ -2,10 +2,10 @@ package com.huyang.zhiqianquan.service.impl;
 
 import com.huyang.zhiqianquan.dao.HouseDao;
 import com.huyang.zhiqianquan.entity.Chart;
+import com.huyang.zhiqianquan.entity.Collection;
 import com.huyang.zhiqianquan.entity.House;
 import com.huyang.zhiqianquan.entity.Tenancy;
 import com.huyang.zhiqianquan.service.HouseService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -37,9 +37,27 @@ public class HouseServiceImpl implements HouseService {
     }
 
     @Override
-    public int Collection(HashMap<String, Object> map) {
-        return houseDao.Collection(map);
+    public Collection FindHouseCollection(HashMap<String ,Object> map) {
+        return houseDao.FindHouseCollection(map);
     }
+
+    @Override
+    public int Collection(HashMap<String, Object> map) {
+        Collection collection = houseDao.FindHouseCollection(map);
+        if(collection==null){
+            return houseDao.Collection(map);
+        }else{
+            if("0".equals(collection.getCollectionStatus())){
+                return houseDao.ReCollection(map);
+            }else{
+                return 3;
+            }
+        }
+
+
+
+    }
+
 
     @Override
     public int ReleaseHouse(House house) {

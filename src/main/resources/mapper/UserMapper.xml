@@ -40,11 +40,13 @@
         house_region as houseRegion,
         house_post as housePost,
         house_price as housePrice,
-        house_contact as houseContact,
-        house_label as houseLabel,
+        house_vx as houseVx,
+        house_telephone as houseTelephone,
+        house_label1 as houseLabel1,
+        house_label2 as houseLabel2,
+        house_label3 as houseLabel3,
         house_title as houseTitle,
         house_describe as houseDescribe,
-        house_images as houseImages,
         house_time as houseTime,
         house_status as houseStatus
     </sql>

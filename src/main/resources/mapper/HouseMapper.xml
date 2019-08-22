@@ -45,7 +45,13 @@
         <result column="house_id" property="houseId" jdbcType="VARCHAR"/>
         <result column="image_name" property="imageName" jdbcType="VARCHAR"/>
     </resultMap>
-
+    <resultMap id="collectionMap" type="com.huyang.zhiqianquan.entity.Collection">
+        <id column="collection_id" property="collectionId" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="house_id" property="houseId" jdbcType="VARCHAR"/>
+        <result column="collection_data" property="collectionData" jdbcType="TIMESTAMP"/>
+        <result column="collection_status" property="collectionStatus" jdbcType="CHAR"/>
+    </resultMap>
 
     <!--查询房源列表-->
     <select id="HouseList" resultMap="houseMap" parameterType="HashMap">
@@ -100,11 +106,23 @@
     <select id="FindImageByHouseId" resultMap="chartMap">
         select * FROM chart where house_id=#{houseId}
     </select>
+    <!--按照用户ID查询是否收藏房源-->
+    <select id="FindHouseCollection" parameterType="HashMap" resultMap="collectionMap">
+        select * from collection where user_id = #{userId} and house_id = #{houseId}
+    </select>
     <!--收藏房源-->
     <insert id="Collection" parameterType="HashMap">
 	    INSERT INTO collection (collection_id,user_id,house_id,collection_data,collection_status)
 	    VALUES(#{collectionId},#{userId},#{houseId},#{collectionData},'1')
     </insert>
+    <!--取消收藏-->
+    <update id="UpdateCollection" parameterType="HashMap">
+        UPDATE collection set collection_status = '0' WHERE user_id = #{userId} and house_id = #{houseId}
+    </update>
+    <!--重新收藏-->
+    <update id="ReCollection" parameterType="HashMap">
+        UPDATE collection set collection_status = '1' WHERE user_id = #{userId} and house_id = #{houseId}
+    </update>
     <!--发布房源信息-->
     <insert id="ReleaseHouse" parameterType="HashMap">
     INSERT INTO house

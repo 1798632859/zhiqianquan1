@@ -30,4 +30,11 @@ public interface GroupService {
      * 查询用户所拥有的群
      */
     List<Group> queryuserallgroup(String userId);
+    /**
+     * 根据社区查社区帖子
+     * @param groupId
+     * @return
+     */
+    Group querygroupchartroom( String groupId);
+
 }

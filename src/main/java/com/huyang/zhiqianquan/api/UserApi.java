@@ -4,9 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.huyang.zhiqianquan.entity.Tenancy;
 import com.huyang.zhiqianquan.entity.User;
+import com.huyang.zhiqianquan.service.ChatroomService;
 import com.huyang.zhiqianquan.service.UserService;
 import com.huyang.zhiqianquan.vo.JsonResult;
 import com.huyang.zhiqianquan.vo.MyCollection;
+import com.huyang.zhiqianquan.vo.MySend;
 import com.sun.org.apache.bcel.internal.generic.RET;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +28,9 @@ import java.util.UUID;
 public class UserApi {
     @Autowired
     UserService UserServiceImpl;
+
+    @Autowired
+    ChatroomService chatroomServiceimpl;
     @Value("${web.upload.image-path}")
     String uploadpath;
     /**
@@ -56,16 +61,32 @@ public class UserApi {
         }
 
     }
+
+    /***
+     * 查询用户发布的房源信息
+     * @param userId
+     * @return
+     */
     @RequestMapping("/api/user/queryhousebyuserid")
     public  JsonResult queryhousebyuserid(String userId){
         return new JsonResult("200","success",UserServiceImpl.queryhousebyuserid(userId));
     }
 
-
+    /***
+     * 查询用户发布的求职信息
+     * @param userId
+     * @return
+     */
     @RequestMapping("/api/user/queryworkbyuserid")
     public JsonResult queryworkbyuserid(String userId){
         return new JsonResult("200","success",UserServiceImpl.queryworkbyuserid(userId));
     }
+
+    /***
+     * 查询用户发送的求租
+     * @param userId
+     * @return
+     */
     @RequestMapping("/api/user/querytenancybyuserid")
     public JsonResult querytenancybyuserid(String userId){
         return new JsonResult("200","success",UserServiceImpl.querytenancybyuserid(userId));
@@ -249,7 +270,7 @@ public class UserApi {
      * @param file
      * @return
      */
-    @RequestMapping("/api/user/upload")
+    @RequestMapping("/api/user/uploadimage")
     public JsonResult upload(@RequestParam("photo") MultipartFile file){
         JsonResult result =null;
         String [] a=file.getOriginalFilename().split("\\.");
@@ -267,6 +288,33 @@ public class UserApi {
         }
 
         return result;
+    }
+
+
+    /***
+     * 用户发布的所有帖子
+     */
+    @RequestMapping("/api/user/mysend")
+    public JsonResult querycsend(String userId){
+        JsonResult result =null;
+        try {
+            List SChartroom=chatroomServiceimpl.selectchatroomallbyId(userId);
+            List STenancy=UserServiceImpl.querytenancybyuserid(userId);
+            List SWork= UserServiceImpl.queryworkbyuserid(userId);
+            List SHouse =UserServiceImpl.queryhousebyuserid(userId);
+            MySend sends=new MySend(SChartroom,STenancy,SWork,SHouse);
+
+            if(sends!=null){
+                result=new JsonResult("200","查询成功",sends);
+            }else {
+                result=new JsonResult("400","查询失败","");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            result= new JsonResult("500","异常","");
+        }
+    return result;
+
     }
 
 }
