@@ -66,4 +66,14 @@ public interface ChatroomService {
      */
     int adddoneiscuss(Discuss discuss);
 
+    /**
+     * 发送二级评论
+     */
+    int adddtwoiscuss(Discuss discuss);
+
+    /**
+     *查询评条数
+     */
+    long selectalldiscussnum(String chatroomId);
+
 }

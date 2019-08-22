@@ -69,7 +69,35 @@ public class HouseApi {
         }
         return result;
     }
+    /**
+     * 模糊查询求租信息
+     *
+     */
+    @RequestMapping("/likefind")
+    public JsonResult likefind(
+            @RequestParam(value = "pageNum", required = true, defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "pageSize", required = true, defaultValue = "8") Integer pageSize,
+            @RequestParam(value = "pattern", required = true) String pattern)
+    {
 
+        JsonResult json=null;
+        try {
+            PageHelper.startPage(pageNum, pageSize);
+            List<Tenancy> list = houseService.likefind(pattern);
+            if (list != null) {
+                PageInfo pageInfo = new PageInfo(list);
+                json = new JsonResult("200", "查询成功", pageInfo);
+                return json;
+            } else {
+                json = new JsonResult("404", "查询失败", "");
+                return json;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            json = new JsonResult("500", "error", "");
+            return json;
+        }
+    }
     /**
      * 房源Id查询房源详情
      * @param houseId
@@ -81,7 +109,7 @@ public class HouseApi {
         try {
             List<Chart> list = houseService.FindImageByHouseId(houseId);
             House house = houseService.FindHouseById(houseId);
-            house.setChart(list);
+            house.setCharts(list);
             if(house!=null){
                 result = new JsonResult("查询成功","200",house);
             }else{
@@ -174,7 +202,7 @@ public class HouseApi {
                     file[i].transferTo(new File(uploadpath+"\\"+filename+"."+fileName[1]));
                     chartMap.put("chartId",UUID.randomUUID().toString());
                     chartMap.put("houseId",house.getHouseId());
-                    chartMap.put("imageName",filename);
+                    chartMap.put("imageName",filename+"."+fileName[1]);
                     int imageI = houseService.RelesaseHouseImage(chartMap);
                     house.setHouseTime(new Timestamp(System.currentTimeMillis()));
                 }catch (Exception ex){
@@ -215,7 +243,7 @@ public class HouseApi {
                     file[i].transferTo(new File(uploadpath1+"\\"+filename+"."+fileName[1]));
                     String index = "reportImage"+(i+1);
                     System.out.println(index);
-                    map.put(index,filename);
+                    map.put(index,filename+"."+fileName[1]);
                 }catch (Exception ex){
                     ex.printStackTrace();
                 }
@@ -239,35 +267,7 @@ public class HouseApi {
         return result;
     }
 
-    /**
-     * 模糊查询求租信息
-     *
-     */
-    @RequestMapping("/likefind")
-    public JsonResult likefind(
-            @RequestParam(value = "pageNum", required = true, defaultValue = "1") Integer pageNum,
-            @RequestParam(value = "pageSize", required = true, defaultValue = "8") Integer pageSize,
-            @RequestParam(value = "pattern", required = true) String pattern)
-    {
 
-        JsonResult json=null;
-        try {
-            PageHelper.startPage(pageNum, pageSize);
-            List<Tenancy> list = houseService.likefind(pattern);
-            if (list != null) {
-                PageInfo pageInfo = new PageInfo(list);
-                json = new JsonResult("200", "查询成功", pageInfo);
-                return json;
-            } else {
-                json = new JsonResult("404", "查询失败", "");
-                return json;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            json = new JsonResult("500", "error", "");
-            return json;
-        }
-    }
 
 
 }

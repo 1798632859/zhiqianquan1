@@ -113,6 +113,23 @@ public class ChatroomServiceimpl implements ChatroomService {
         return chatroomDao.adddoneiscuss(discuss);
     }
 
+    /**
+     * 发送二级评论
+     */
+    @Override
+    public int adddtwoiscuss(Discuss discuss) {
+        return chatroomDao.adddtwoiscuss(discuss);
+    }
+
+    /**
+     * 查询评论条数
+     * @param chatroomId
+     * @return
+     */
+    @Override
+    public long selectalldiscussnum(String chatroomId) {
+        return chatroomDao.selectalldiscussnum(chatroomId);
+    }
 
 
 }

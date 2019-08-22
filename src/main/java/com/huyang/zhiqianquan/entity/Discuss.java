@@ -17,6 +17,12 @@ public class Discuss implements Serializable {
   private String discussStatus;
   private List<Discuss> list;
 
+    private String userName;
+    private String userImage;
+    private String userSchool;
+    private String userCompany;
+    private String userPost;
+    private User user;
 
 
 
@@ -107,5 +113,51 @@ public class Discuss implements Serializable {
         this.touserId = touserId;
     }
 
+    public String getUserName() {
+        return userName;
+    }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
+    }
+
+    public String getUserSchool() {
+        return userSchool;
+    }
+
+    public void setUserSchool(String userSchool) {
+        this.userSchool = userSchool;
+    }
+
+    public String getUserCompany() {
+        return userCompany;
+    }
+
+    public void setUserCompany(String userCompany) {
+        this.userCompany = userCompany;
+    }
+
+    public String getUserPost() {
+        return userPost;
+    }
+
+    public void setUserPost(String userPost) {
+        this.userPost = userPost;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

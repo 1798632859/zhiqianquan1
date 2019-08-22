@@ -38,7 +38,7 @@ public class GroupApi {
     @RequestMapping("/api/group/add")
     public JsonResult addgroup(String groupImage, String groupCooment, String groupName, String userId) {
         JsonResult result = null;
-        HashMap hashMap=new HashMap();
+        HashMap hashMap = new HashMap();
         Group group = new Group();
         group.setGroupId(UUID.randomUUID().toString());
         group.setGroupImage(groupImage);
@@ -46,13 +46,13 @@ public class GroupApi {
         group.setGroupName(groupName);
         group.setFounderUser(userId);
         group.setGroupStatus("1");
-        UserGroup userGroup=new UserGroup();
+        UserGroup userGroup = new UserGroup();
         userGroup.setGroupId(group.getGroupId());
         userGroup.setUserId(userId);
         userGroup.setUserGroupId(UUID.randomUUID().toString().replaceAll("-", ""));
         userGroup.setUserGroupStatus("1");
-        hashMap.put("group",group);
-        hashMap.put("userGroup",userGroup);
+        hashMap.put("group", group);
+        hashMap.put("userGroup", userGroup);
         try {
             if (group != null) {
                 GroupServiceImpl.addgroup(hashMap);
@@ -71,13 +71,14 @@ public class GroupApi {
      * 更改社区信息
      */
     @RequestMapping("/api/group/update")
-    public JsonResult updategroup(String groupId, String groupImage, String groupCooment, String groupName) {
+    public JsonResult updategroup(String groupId, String groupImage, String groupCooment, String groupName,String founderUser) {
         JsonResult result = null;
         Group group = new Group();
         group.setGroupId(groupId);
         group.setGroupImage(groupImage);
         group.setGroupCooment(groupCooment);
         group.setGroupName(groupName);
+        group.setFounderUser(founderUser);
         try {
             if (group != null) {
                 GroupServiceImpl.updategroup(group);
@@ -157,14 +158,15 @@ public class GroupApi {
 
         return result;
     }
+
     /**
      * 查询用户的所有群
      */
     @RequestMapping("/api/query/userallgroup")
-    public JsonResult queryuserallgroup(String userId){
+    public JsonResult queryuserallgroup(String userId) {
         JsonResult result = null;
         try {
-            List list=GroupServiceImpl.queryuserallgroup(userId);
+            List list = GroupServiceImpl.queryuserallgroup(userId);
             result = new JsonResult("200", "查询所有社区成功", list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -185,6 +187,26 @@ public class GroupApi {
         } catch (Exception e) {
             e.printStackTrace();
             result = new JsonResult("500", "查询所有社区异常", e.getMessage());
+        }
+        return result;
+    }
+    /**
+     * 查询所有的群的人数，根据人数降序,并查询该用户已拥有的社区
+     */
+    @RequestMapping("/api/group/have")
+    public JsonResult grouporder(String userId) {
+        JsonResult result = null;
+        try {
+            HashMap map=GroupServiceImpl.grouporder(userId);
+            if(map!=null){
+                result = new JsonResult("200", "查询所拥有社区成功", map);
+            }else{
+                result = new JsonResult("400", "查询所拥有社区失败", null);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new JsonResult("500", "查询所拥有社区异常", e.getMessage());
         }
         return result;
     }
