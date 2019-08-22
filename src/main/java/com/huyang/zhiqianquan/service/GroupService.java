@@ -36,5 +36,9 @@ public interface GroupService {
      * @return
      */
     Group querygroupchartroom( String groupId);
+    /**
+     * 查询所有的群的人数，根据人数降序,并查询该用户已拥有的社区
+     */
+    HashMap grouporder( String userId);
 
 }
