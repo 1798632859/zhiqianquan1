@@ -74,4 +74,15 @@ public interface ChatroomDao {
      * 发送一级评论
      */
     int adddoneiscuss(Discuss discuss);
+
+    /**
+     * 发送二级评论
+     */
+    int adddtwoiscuss(Discuss discuss);
+
+    /**
+     *查询评条数
+     */
+    long selectalldiscussnum(String chatroomId);
+
 }

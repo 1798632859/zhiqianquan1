@@ -2,6 +2,7 @@ package com.huyang.zhiqianquan.dao;
 
 import com.huyang.zhiqianquan.entity.Group;
 import com.huyang.zhiqianquan.entity.UserGroup;
+import com.huyang.zhiqianquan.entity.order;
 import io.lettuce.core.dynamic.annotation.Param;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -38,7 +39,6 @@ public interface GroupDao {
      */
     List<Group> queryuserallgroup(@Param("userId") String userId);
 
-
     /**
      * 根据社区查社区帖子
      * @param groupId
@@ -46,4 +46,9 @@ public interface GroupDao {
      */
     Group querygroupchartroom(@Param("groupId") String groupId);
 
+    /**
+     * 查询所有的群的人数，根据人数降序
+     * @return
+     */
+    List<order> querynumberdesc();
 }

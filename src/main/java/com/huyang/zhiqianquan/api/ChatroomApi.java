@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
@@ -31,13 +33,17 @@ public class ChatroomApi {
     ) {
         JsonResult result = null;
         try {
+
+
+
             System.out.println(pageNum);
             System.out.println(pageSize);
             PageHelper.startPage(pageNum, pageSize);
             List<Chatroom> list = ChatroomServiceimpl.selectchatroomall();
+            System.out.println(list.get(0).getChatroomData());
             if (list != null) {
                 PageInfo pageInfo = new PageInfo(list);
-                result = new JsonResult("200", "查询成功", pageInfo);
+                result = new JsonResult("200", "查询消息成功", pageInfo);
                 return result;
             } else {
                 result = new JsonResult("404", "查询失败", "");
@@ -58,7 +64,7 @@ public class ChatroomApi {
     @RequestMapping("/api/message/addchatroom")
     public JsonResult addmessage(
             String userId,
-            @RequestParam(value = "messageType", required = true, defaultValue = "0") String chatroomType,
+            @RequestParam(value = "messageType", required = true, defaultValue = "") String chatroomType,
             String chatroomComment,
             String chatroomImage
     ) {
@@ -322,4 +328,63 @@ public class ChatroomApi {
             return result;
         }
     }
+
+    /**
+     * 发送二级评论
+     */
+    @RequestMapping("/api/message/adddtwoiscuss")
+    public JsonResult adddtwoiscuss(
+            String userId,
+            String touserId,
+            String discussFather,
+            String chatroomId,
+            String chartroomComment
+    ) {
+        JsonResult result = null;
+        Discuss discuss=new Discuss();
+        discuss.setDiscussId(IdUtil.getUuid());
+        discuss.setUserId(userId);
+        discuss.setTouserId(touserId);
+        discuss.setChatroomId(chatroomId);
+        discuss.setDiscussFather(discussFather);
+        discuss.setDiscussComment(chartroomComment);
+        Timestamp data = new Timestamp(System.currentTimeMillis());
+        discuss.setDiscussData(data);
+        discuss.setDiscussStatus("1");
+
+        try {
+            int i = ChatroomServiceimpl.adddtwoiscuss(discuss);
+            if (i != 0) {
+                result = new JsonResult("200", "查询二级成功", i);
+                return result;
+            } else {
+                result = new JsonResult("404", "查询评论失败", "");
+                return result;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = new JsonResult("500", "error", "");
+            return result;
+        }
+    }
+
+    /**
+     * 查询消息的评论条数
+     */
+    @RequestMapping("/api/message/selectalldiscussnum")
+    public JsonResult selectalldiscussnum(
+            String chatroomId
+    ){
+        JsonResult result = null;
+        try {
+            long l = ChatroomServiceimpl.selectalldiscussnum(chatroomId);
+                result = new JsonResult("200", "查询评论条数成功", l);
+                return result;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = new JsonResult("500", "error", "");
+            return result;
+        }
+    }
+
 }

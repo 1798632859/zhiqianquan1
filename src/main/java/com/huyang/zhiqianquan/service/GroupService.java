@@ -1,6 +1,7 @@
 package com.huyang.zhiqianquan.service;
 
 import com.huyang.zhiqianquan.entity.Group;
+import io.lettuce.core.dynamic.annotation.Param;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +36,9 @@ public interface GroupService {
      * @param groupId
      * @return
      */
-    Group querygroupchartroom( String groupId);
-
+    Group querygroupchartroom(@Param("groupId") String groupId);
+    /**
+     * 查询所有的群的人数，根据人数降序,并查询该用户已拥有的社区
+     */
+    HashMap grouporder(String userId);
 }
