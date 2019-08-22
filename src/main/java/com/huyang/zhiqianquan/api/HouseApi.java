@@ -202,7 +202,7 @@ public class HouseApi {
                     file[i].transferTo(new File(uploadpath+"\\"+filename+"."+fileName[1]));
                     chartMap.put("chartId",UUID.randomUUID().toString());
                     chartMap.put("houseId",house.getHouseId());
-                    chartMap.put("imageName",filename);
+                    chartMap.put("imageName",filename+"."+fileName[1]);
                     int imageI = houseService.RelesaseHouseImage(chartMap);
                     house.setHouseTime(new Timestamp(System.currentTimeMillis()));
                 }catch (Exception ex){
@@ -243,7 +243,7 @@ public class HouseApi {
                     file[i].transferTo(new File(uploadpath1+"\\"+filename+"."+fileName[1]));
                     String index = "reportImage"+(i+1);
                     System.out.println(index);
-                    map.put(index,filename);
+                    map.put(index,filename+"."+fileName[1]);
                 }catch (Exception ex){
                     ex.printStackTrace();
                 }
