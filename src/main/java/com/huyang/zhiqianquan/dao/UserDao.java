@@ -1,5 +1,6 @@
 package com.huyang.zhiqianquan.dao;
 
+import com.huyang.zhiqianquan.entity.Admin;
 import com.huyang.zhiqianquan.entity.User;
 import com.huyang.zhiqianquan.entity.Work;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,4 +22,7 @@ public interface UserDao {
     List<Work> querycollectionworkbyuserid(String userId);
     List querycollectiontenancybyuserid(String userId);
     List querycollectionhousebyuserid(String userId);
+    Admin loginadmin(HashMap map);
+    Integer registeradmin(Admin admin );
+    Integer updateadminbyid(HashMap map);
 }

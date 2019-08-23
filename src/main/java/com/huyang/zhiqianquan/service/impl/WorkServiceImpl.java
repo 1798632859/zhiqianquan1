@@ -89,6 +89,24 @@ public class WorkServiceImpl implements WorkService {
     public void deletecollectionwork(String workid) {
         mapper.deletecollectionwork(workid);
     }
-
+    /**
+     * 查询所有领域
+     */
+    @Override
+    public List<Work> worktypequery() {
+        return mapper.worktypequery();
+    }
+    /**
+     * 查询所有领工作类别
+     */
+    public List<Work> workposttypequery(){
+        return mapper.workposttypequery();
+    }
+    /**
+     * 查询所有城市
+     */
+    public List<Work> workcityquery(){
+        return mapper.workcityquery();
+    }
 
 }

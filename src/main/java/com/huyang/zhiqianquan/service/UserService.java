@@ -1,5 +1,6 @@
 package com.huyang.zhiqianquan.service;
 
+import com.huyang.zhiqianquan.entity.Admin;
 import com.huyang.zhiqianquan.entity.User;
 import com.huyang.zhiqianquan.entity.Work;
 
@@ -17,4 +18,7 @@ public interface UserService {
     List<Work> querycollectionworkbyuserid(String userId);
     List querycollectiontenancybyuserid(String userId);
     List querycollectionhousebyuserid(String userId);
+    Admin loginadmin(HashMap map);
+    Integer registeradmin(Admin admin );
+    Integer updateadminbyid(HashMap map);
 }

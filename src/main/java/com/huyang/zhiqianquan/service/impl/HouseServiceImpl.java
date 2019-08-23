@@ -81,8 +81,13 @@ public class HouseServiceImpl implements HouseService {
     }
 
     @Override
-    public List<Tenancy> likefind(String pattern) {
+    public List<House> likefind(String pattern) {
         return houseDao.likefind(pattern);
+    }
+
+    @Override
+    public int DeleteHouse(String houseId) {
+        return houseDao.DeleteHouse(houseId);
     }
 
 

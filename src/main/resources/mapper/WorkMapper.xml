@@ -163,4 +163,16 @@
     <delete id="deletecollectionwork" >
         delete from collection where work_id=#{workid}
     </delete>
+    <!--查询所有领域-->
+    <select id="worktypequery" resultMap="hashWork">
+        select work.work_type from work group by work.work_type
+    </select>
+    <!--查询所有工作类别-->
+    <select id="workposttypequery" resultMap="hashWork">
+        select work.work_post_type from work group by work.work_post_type
+    </select>
+    <!--查询所有城市-->
+    <select id="workcityquery" resultMap="hashWork">
+        select work.work_city from work group by work.work_city
+    </select>
 </mapper>

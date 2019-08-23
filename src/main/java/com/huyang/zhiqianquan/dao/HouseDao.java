@@ -39,5 +39,7 @@ public interface HouseDao {
     //举报房源
     public int ReportHouse(HashMap<String, Object> reportMap);
     //模糊查询
-    List<Tenancy> likefind(@Param("pattern") String pattern);
+    List<House> likefind(@Param("pattern") String pattern);
+    //后台删除房源
+    int DeleteHouse(@Param("houseId") String houseId);
 }

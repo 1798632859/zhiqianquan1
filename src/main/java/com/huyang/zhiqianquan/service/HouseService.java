@@ -29,5 +29,8 @@ public interface HouseService {
     //举报房源
     public int ReportHouse(HashMap<String, Object> reportMap);
     //
-    List<Tenancy> likefind(String pattern);
+    List<House> likefind(String pattern);
+
+    //后台删除房源
+    int DeleteHouse(@Param("houseId") String houseId);
 }

@@ -170,4 +170,9 @@
         h.house_label2,h.house_label3)
         LIKE #{pattern} and  h.house_status=1
     </select>
+
+    <!--后台删除房源-->
+    <update id="DeleteHouse" >
+        UPDATE house SET house_status = '0' where house_id = #{houseId}
+    </update>
 </mapper>

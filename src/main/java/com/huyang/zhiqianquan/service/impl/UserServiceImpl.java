@@ -1,6 +1,7 @@
 package com.huyang.zhiqianquan.service.impl;
 
 import com.huyang.zhiqianquan.dao.UserDao;
+import com.huyang.zhiqianquan.entity.Admin;
 import com.huyang.zhiqianquan.entity.User;
 import com.huyang.zhiqianquan.entity.Work;
 import com.huyang.zhiqianquan.service.UserService;
@@ -47,6 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateuserbyid(HashMap map) {
+
         return userDao.updateuserbyid(map);
     }
 
@@ -63,6 +65,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public List querycollectionhousebyuserid(String userId) {
         return userDao.querycollectionhousebyuserid(userId);
+    }
+
+    @Override
+    public Admin loginadmin(HashMap map) {
+        return userDao.loginadmin(map);
+    }
+
+    @Override
+    public Integer registeradmin(Admin admin) {
+        return userDao.registeradmin(admin);
+    }
+
+    @Override
+    public Integer updateadminbyid(HashMap map) {
+        return userDao.updateadminbyid(map);
     }
 
 }

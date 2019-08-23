@@ -2,6 +2,9 @@ package com.huyang.zhiqianquan.api;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.dialect.AbstractDialect;
+import com.github.pagehelper.dialect.helper.HsqldbDialect;
+import com.huyang.zhiqianquan.entity.Admin;
 import com.huyang.zhiqianquan.entity.Tenancy;
 import com.huyang.zhiqianquan.entity.User;
 import com.huyang.zhiqianquan.service.ChatroomService;
@@ -317,4 +320,95 @@ public class UserApi {
 
     }
 
+
+    /***
+     * admin登陆接口
+     */
+    @RequestMapping("/api/admin/login")
+    public JsonResult loginadmin(String userName ,String password){
+        JsonResult result =null;
+        HashMap map=new HashMap();
+        map.put("userName",userName);
+        map.put("password",password);
+        try {
+            Admin admin =UserServiceImpl.loginadmin(map);
+            if(admin!=null){
+                result=new JsonResult("200","登陆成功",admin);
+            }else {
+                result=new JsonResult("400","登陆失败","");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new JsonResult("500","异常","");
+        }
+        return result;
+    }
+
+    /***
+     *
+     * @param name
+     * @param password
+     * @param realname
+     * @param age
+     * @param hobby
+     * @param vx
+     * @param describe
+     * @return
+     */
+    @RequestMapping("/api/user/registeradmin")
+public JsonResult registeradmin(String name,String password,String realname,int age,String hobby,String vx,String describe){
+    Admin admin =new Admin();
+    admin.setName(name);
+    admin.setPassword(password);
+    admin.setRealname(realname);
+    admin.setAge(age);
+    admin.setHobby(hobby);
+    admin.setVx(vx);
+    admin.setDescribe(describe);
+    JsonResult result =null;
+    try {
+        Integer i=UserServiceImpl.registeradmin(admin);
+        if(i!=0){
+            result=new JsonResult("200","注册成功",admin.getId());
+        }else {
+            result=new JsonResult("400","注册失败","");
+        }
+    }catch (Exception e){
+        e.printStackTrace();
+        return new JsonResult("500","异常","");
+    }
+    return result;
 }
+
+
+
+    @RequestMapping("/api/user/updateadminbyid")
+    public JsonResult updateadminbyid(String id,String name,String password,String realname,String age,String hobby,String vx,String describe) {
+        JsonResult result =null;
+        HashMap map =new HashMap();
+        map.put("id",id);
+        map.put("name",name);
+        map.put("password",password);
+        map.put("realname",realname);
+        map.put("age",age);
+        map.put("hobby",hobby);
+        map.put("vx",vx);
+        map.put("describe",describe);
+        try {
+            Integer i=UserServiceImpl.updateadminbyid(map);
+            if(i!=0){
+                result=new JsonResult("200","修改成功",i);
+            }else {
+                result=new JsonResult("400","修改失败","");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new JsonResult("500","异常","");
+        }
+        return result;
+
+
+    }
+
+
+    }

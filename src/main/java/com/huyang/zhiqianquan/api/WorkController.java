@@ -258,4 +258,50 @@ public class WorkController {
         }
         return result;
     }
+    /**
+     * 查询领域
+     */
+    @RequestMapping("/api/work/type")
+    public JsonResult worktypequery(){
+        JsonResult result = null;
+        try{
+            List list= WorkServiceImpl.worktypequery();
+            result=new JsonResult("200","查询成功",list);
+        }catch(Exception e){
+            e.printStackTrace();
+            result=new JsonResult("500","查询异常",null);
+        }
+        return result;
+    }
+    /**
+     * 查询工作类别
+     */
+    @RequestMapping("/api/work/posttype")
+    public JsonResult workposttypequery(){
+        JsonResult result = null;
+        try{
+            List list= WorkServiceImpl.workposttypequery();
+            result=new JsonResult("200","查询成功",list);
+        }catch(Exception e){
+            e.printStackTrace();
+            result=new JsonResult("500","查询异常",null);
+        }
+        return result;
+    }
+    /**
+     * 查询工作类别
+     */
+    @RequestMapping("/api/work/city")
+    public JsonResult workcityquery(){
+        JsonResult result = null;
+        try{
+            List list= WorkServiceImpl.workcityquery();
+            result=new JsonResult("200","查询成功",list);
+        }catch(Exception e){
+            e.printStackTrace();
+            result=new JsonResult("500","查询异常",null);
+        }
+        return result;
+    }
+
 }

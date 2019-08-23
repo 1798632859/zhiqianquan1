@@ -43,9 +43,14 @@ public class HouseApi {
      * @return
      */
     @RequestMapping("/list")
-    public JsonResult HouseList(@RequestParam(value = "pageNum", required = true, defaultValue = "1") Integer pageNum,
-                                   @RequestParam(value = "pageSize", required = true, defaultValue = "8") Integer pageSize,
-                                     String houseType,String houseAtcity,String houseRegion,Integer minPrice,Integer maxPrice
+    public JsonResult HouseList(
+            @RequestParam(value = "pageNum", required = true, defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "pageSize", required = true, defaultValue = "8") Integer pageSize,
+            String houseType,
+            String houseAtcity,
+            String houseRegion,
+            Integer minPrice,
+            Integer maxPrice
                                 ){
         JsonResult result=null;
         try {
@@ -59,13 +64,13 @@ public class HouseApi {
             List<House> list = houseService.HouseList(map);
             PageInfo<Map> pageInfo = new PageInfo(list);
             if(list!=null){
-                result = new JsonResult("查询成功","200",pageInfo);
+                result = new JsonResult("200","查询成功",pageInfo);
             }else {
-                result = new JsonResult("查询失败","404","");
+                result = new JsonResult("404","查询失败","");
             }
         }catch (Exception ex){
             ex.printStackTrace();
-            result = new JsonResult("查询异常","500","");
+            result = new JsonResult("500","查询异常","");
         }
         return result;
     }
@@ -73,17 +78,16 @@ public class HouseApi {
      * 模糊查询求租信息
      *
      */
-    @RequestMapping("/likefind")
+    @RequestMapping("/likeFind")
     public JsonResult likefind(
             @RequestParam(value = "pageNum", required = true, defaultValue = "1") Integer pageNum,
             @RequestParam(value = "pageSize", required = true, defaultValue = "8") Integer pageSize,
             @RequestParam(value = "pattern", required = true) String pattern)
     {
-
         JsonResult json=null;
         try {
             PageHelper.startPage(pageNum, pageSize);
-            List<Tenancy> list = houseService.likefind(pattern);
+            List<House> list = houseService.likefind(pattern);
             if (list != null) {
                 PageInfo pageInfo = new PageInfo(list);
                 json = new JsonResult("200", "查询成功", pageInfo);
@@ -111,13 +115,13 @@ public class HouseApi {
             House house = houseService.FindHouseById(houseId);
             house.setCharts(list);
             if(house!=null){
-                result = new JsonResult("查询成功","200",house);
+                result = new JsonResult("200","查询成功",house);
             }else{
-                result = new JsonResult("查询失败","404","");
+                result = new JsonResult("404","查询失败","");
             }
         }catch (Exception ex){
             ex.printStackTrace();
-            result = new JsonResult("查询异常","500","");
+            result = new JsonResult("500","查询异常","");
         }
         return result;
     }
@@ -138,16 +142,16 @@ public class HouseApi {
             Collection collection = houseService.FindHouseCollection(map);
             if(collection!=null){
                 if("1".equals(collection.getCollectionStatus())){
-                    result = new JsonResult("已收藏的","200","");
+                    result = new JsonResult("200","已收藏的","");
                 }else{
-                    result = new JsonResult("未收藏的","404","");
+                    result = new JsonResult("404","未收藏的","");
                 }
             }else{
-                result = new JsonResult("未收藏的","404","");
+                result = new JsonResult("404","未收藏的","");
             }
         }catch (Exception ex){
             ex.printStackTrace();
-            result = new JsonResult("系统异常","500","");
+            result = new JsonResult("500","系统异常","");
         }
         return result;
     }
@@ -169,15 +173,15 @@ public class HouseApi {
             map.put("collectionData",new Timestamp(System.currentTimeMillis()));
             int i = houseService.Collection(map);
             if(i==3){
-                result = new JsonResult("已收藏过，无需重复","202","");
+                result = new JsonResult("202","已收藏过，无需重复","");
             }else if(i==1){
-                result = new JsonResult("收藏成功","200","");
+                result = new JsonResult("200","收藏成功","");
             }else{
-                result = new JsonResult("收藏失败","404","");
+                result = new JsonResult("404","收藏失败","");
             }
         }catch (Exception ex){
             ex.printStackTrace();
-            result = new JsonResult("系统异常","500","");
+            result = new JsonResult("500","系统异常","");
         }
         return result;
     }
@@ -213,13 +217,13 @@ public class HouseApi {
        try {
            int releaseI = houseService.ReleaseHouse(house);
             if(releaseI==1){
-                result = new JsonResult("发布成功","200","");
+                result = new JsonResult("200","发布成功","");
             }else{
-                result = new JsonResult("发布失败","500","");
+                result = new JsonResult("500","发布失败","");
             }
         }catch (Exception ex){
             ex.printStackTrace();
-            result = new JsonResult("发布异常","404","");
+            result = new JsonResult("404","发布异常","");
         }
         return result;
     }
@@ -256,7 +260,7 @@ public class HouseApi {
             map.put("reportTime",new Timestamp(System.currentTimeMillis()));
             int i = houseService.ReportHouse(map);
             if(i==1){
-                result = new JsonResult("举报成功","200","");
+                result = new JsonResult("200","举报成功","");
             }else{
                 result = new JsonResult("举报失败","500","");
             }
@@ -267,7 +271,28 @@ public class HouseApi {
         return result;
     }
 
-
+    /**
+     *
+     * 删除房源
+     * @param houseId
+     * @return
+     */
+    @RequestMapping("/admin/delete")
+    public JsonResult DeleteHouse(@RequestParam("houseId") String houseId){
+        JsonResult result=null;
+        try{
+            int i = houseService.DeleteHouse(houseId);
+            if(i==1){
+                result = new JsonResult("200","删除成功","");
+            }else{
+                result = new JsonResult("200","删除失败","");
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+            result = new JsonResult("200","删除异常","");
+        }
+        return result;
+    }
 
 
 }

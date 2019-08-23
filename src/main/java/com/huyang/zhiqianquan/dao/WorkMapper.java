@@ -58,4 +58,16 @@ public interface WorkMapper {
      * 删除收藏的招聘的信息
      */
     void deletecollectionwork(@Param("workid") String workid);
+    /**
+     * 查询所有领域
+     */
+    List<Work> worktypequery();
+    /**
+     * 查询所有领工作类别
+     */
+    List<Work> workposttypequery();
+    /**
+     * 查询所有城市
+     */
+    List<Work> workcityquery();
 }

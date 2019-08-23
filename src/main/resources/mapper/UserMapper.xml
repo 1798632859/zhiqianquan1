@@ -90,12 +90,12 @@
     </select>
     <!--修改用户信息-->
     <update id="updateuserbyid" parameterType="hashmap">
-            UPDATE `user`
-          SET user_sex = #{userSex},
-          user_school = #{userSchool},
-          <if test="userCompany!=null">
-              user_company=#{userCompany},
-          </if>
+        UPDATE `user`
+        SET user_sex = #{userSex},
+        user_school = #{userSchool},
+        <if test="userCompany!=null">
+            user_company=#{userCompany},
+        </if>
         <if test="userCompany!=null">
             user_post=#{userPost},
         </if>
@@ -108,8 +108,8 @@
         <if test="1==1">
             user_status='1'
         </if>
-          WHERE
-	          user_id = #{userId}
+        WHERE
+        user_id = #{userId}
     </update>
     <!--根据用户id查询所收藏的work-->
     <resultMap id="hashWork" type="com.huyang.zhiqianquan.entity.Work">
@@ -142,24 +142,22 @@ WHERE
     </select>
 
 
-
-
     <!--查询用户收藏的求职-->
     <resultMap id="hashqiuzu" type="com.huyang.zhiqianquan.entity.Tenancy">
-        <id property="tenancyId" column="tenancy_id" ></id>
-        <result property="tenancyLivetime" column="tenancy_livetime" ></result>
-        <result property="tenancyType" column="tenancy_type" ></result>
-        <result property="tenancy_Requestsex" column="tenancy_requestsex" ></result>
-        <result property="tenancyCity" column="tenancy_city" ></result>
-        <result property="tenancyRegion" column="tenancy_region" ></result>
-        <result property="tenancyPosition" column="tenancy_position" ></result>
-        <result property="tenancyPrice" column="tenancy_Price" ></result>
-        <result property="tenancyPhone" column="tenancy_phone" ></result>
-        <result property="tenancyLabel" column="tenancy_Label" ></result>
-        <result property="tenancyCommed" column="tenancy_commed" ></result>
-        <result property="tenancyFounddata" column="tenancy_founddata" ></result>
-        <result property="tenancyStatus" column="tenancy_status" ></result>
-        <result property="userId" column="user_id" ></result>
+        <id property="tenancyId" column="tenancy_id"></id>
+        <result property="tenancyLivetime" column="tenancy_livetime"></result>
+        <result property="tenancyType" column="tenancy_type"></result>
+        <result property="tenancy_Requestsex" column="tenancy_requestsex"></result>
+        <result property="tenancyCity" column="tenancy_city"></result>
+        <result property="tenancyRegion" column="tenancy_region"></result>
+        <result property="tenancyPosition" column="tenancy_position"></result>
+        <result property="tenancyPrice" column="tenancy_Price"></result>
+        <result property="tenancyPhone" column="tenancy_phone"></result>
+        <result property="tenancyLabel" column="tenancy_Label"></result>
+        <result property="tenancyCommed" column="tenancy_commed"></result>
+        <result property="tenancyFounddata" column="tenancy_founddata"></result>
+        <result property="tenancyStatus" column="tenancy_status"></result>
+        <result property="userId" column="user_id"></result>
     </resultMap>
     <select id="querycollectiontenancybyuserid" resultMap="hashqiuzu">
    SELECT
@@ -199,6 +197,45 @@ WHERE
 	collection.user_id = #{userId}
     </select>
 
-    
+    <!--管理员登陆-->
+    <select id="loginadmin" parameterType="hashmap" resultType="com.huyang.zhiqianquan.entity.Admin">
+    select * from admin where name=#{userName} and  password=#{password}
+</select>
+
+    <!--管理员注册-->
+    <insert id="registeradmin" parameterType="com.huyang.zhiqianquan.entity.Admin" useGeneratedKeys="true"
+            keyProperty="id">
+       insert  into admin (name,password,realname,age,hobby,vx,admin.describe )values (#{name},#{password},#{realname},#{age},#{hobby},#{vx},#{describe} )
+   </insert>
+    <!--管理员信息修改-->
+    <update id="updateadminbyid" parameterType="hashmap">
+        update admin set
+        <if test="name!=null">
+            name=#{name},
+        </if>
+        <if test="password!=null">
+            password=#{password},
+        </if>
+        <if test="realname!=null">
+            realname=#{realname},
+        </if>
+        <if test="age!=null">
+            age=#{age},
+        </if>
+        <if test="hobby!=null">
+            hobby=#{hobby},
+        </if>
+        <if test="vx!=null">
+            vx=#{vx},
+        </if>
+        <if test="describe!=null">
+            describe=#{describe},
+        </if>
+        <if test="1==1">
+            status='1'
+        </if>
+        where id=#{id}
+    </update>
+
 
 </mapper>
